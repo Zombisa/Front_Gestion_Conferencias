@@ -1,7 +1,6 @@
 package views;
-import Services.ServiceStorageArticle;
-import Services.ServiceStorageConferences;
-import dataAccess.repositories.ArrayList.RepositoryConferenceArrayList;
+import models.Conference;
+import servicios.ServiciosConferencias;
 import java.awt.Color;
 
 import utilities.Utilities;
@@ -20,19 +19,19 @@ public class VConferenceInfo extends javax.swing.JFrame {
     private int idConference;
     private int idAuthor;
     private Conference conference;
-    private ServiceStorageConferences serviceConferences;
+    private ServiciosConferencias serviceConferences;
     private ServiceStorageArticle serviceArticle;
     
     /**
      * Creates new form 
      */
    
-    public VConferenceInfo(ServiceStorageConferences service,ServiceStorageArticle serviceArticle,int idConference,int idAuthor) {
+    public VConferenceInfo(ServiciosConferencias service,ServicosArticle serviceArticle,int idConference,int idAuthor) {
         initComponents();
         this.serviceConferences = service;
         this.serviceArticle=serviceArticle;
         this.idAuthor=idAuthor;
-        this.conference = service.getConferenceById(idConference);
+        this.conference = service.consultarConferencia(idConference);
         this.idConference = idConference;
         mostrarDatos(conference);
         mostrarBoton(conference);

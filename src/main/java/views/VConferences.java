@@ -1,7 +1,7 @@
 package views;
 
-import Services.ServiceStorageConferences;
-import dataAccess.repositories.ArrayList.RepositoryConferenceArrayList;
+import models.Conference;
+import servicios.ServiciosConferencias;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import models.Conference;
 import utilities.Utilities;
-import PObserver.Observer;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -25,19 +25,19 @@ import PObserver.Observer;
  *
  * @author Isabela Sánchez Saavedra <isanchez@unicauca.edu.co>
  */
-public class VConferences extends javax.swing.JFrame implements Observer{
-    private ServiceStorageConferences service;
+public class VConferences extends javax.swing.JFrame {
+    private ServiciosConferencias service;
     private List<Conference> conferenceList;
     private Runnable refreshCallback; 
 
     /**
      * Creates new form VLogin
      */
-    public VConferences(ServiceStorageConferences service, Runnable refreshCallback) {
+    public VConferences(ServiciosConferencias service, Runnable refreshCallback) {
         this.service = service;
         this.refreshCallback = refreshCallback;
         initComponents();
-        List<Conference> conferences = service.listConferences();
+        List<Conference> conferences = service.listarConference();
         
         loadConferences(conferences);
     }
@@ -375,15 +375,14 @@ public class VConferences extends javax.swing.JFrame implements Observer{
     }
 
     private void refreshConferences() {
-        List<Conference> updatedConferences = service.listConferences();
+        List<Conference> updatedConferences = service.listarConference();
         loadConferences(updatedConferences);
     }
 
 
-    @Override
     public void update(Object o) {
-        service = (ServiceStorageConferences)o;
-        loadConferences(service.listConferences());
+        service = (ServiciosConferencias)o;
+        loadConferences(service.listarConference());
     }
     
     
@@ -408,10 +407,10 @@ public class VConferences extends javax.swing.JFrame implements Observer{
         private String label;
         private boolean isPushed;
         private List<Conference> conferences;
-        private ServiceStorageConferences service;  // Añadir el servicio como atributo
+        private ServiciosConferencias service;  // Añadir el servicio como atributo
         private Runnable refreshCallback; 
 
-        public ButtonEditor(JCheckBox checkBox, List<Conference> conferences, ServiceStorageConferences service, Runnable refreshCallback) {
+        public ButtonEditor(JCheckBox checkBox, List<Conference> conferences, ServiciosConferencias service, Runnable refreshCallback) {
             super(checkBox);
             this.conferences = conferences;
             this.service = service;  // Inicializar el servicio

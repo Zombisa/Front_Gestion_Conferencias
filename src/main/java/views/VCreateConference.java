@@ -4,8 +4,8 @@
  */
 package views;
 
-import Services.ServiceStorageConferences;
-import dataAccess.repositories.ArrayList.RepositoryConferenceArrayList;
+import models.Conference;
+import servicios.ServiciosConferencias;
 import java.awt.Color;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,7 +19,7 @@ import utilities.Utilities;
  * @author Isabela Sánchez Saavedra <isanchez@unicauca.edu.co>
  */
 public class VCreateConference extends javax.swing.JFrame {
-    private ServiceStorageConferences serviceConferences;
+    private ServiciosConferencias serviceConferences;
     private VProfileOrganizer profileOrganizer;
     private int idOrganizer;
     private Runnable refreshCallback;  // Función para notificar a la ventana principal
@@ -27,7 +27,7 @@ public class VCreateConference extends javax.swing.JFrame {
     /**
      * Creates new form VProfileOrganizer
      */
-    public VCreateConference(ServiceStorageConferences serviceConferences, int idOrganizer, Runnable refreshCallback) {
+    public VCreateConference(ServiciosConferencias serviceConferences, int idOrganizer, Runnable refreshCallback) {
         initComponents();
         this.serviceConferences = serviceConferences;
         this.idOrganizer = idOrganizer;
@@ -441,10 +441,10 @@ public class VCreateConference extends javax.swing.JFrame {
                     finishDateFormatted = formatter.parse(finishDate);
 
                     // Crear un nuevo objeto Conference con las fechas formateadas
-                    Conference newConference = new Conference(name, description,  startDateFormatted ,finishDateFormatted, place, theme, (serviceConferences.listConferences().size()+1), idOrganizer);
+                    Conference newConference = new Conference(name,description,startDateFormatted ,finishDateFormatted, place, theme, (serviceConferences.listarConference().size()+1), idOrganizer);
 
                     // Registrar la conferencia
-                    if(!serviceConferences.addConference(newConference))
+                    if(serviceConferences.registrarConferencia(newConference)==null)
                         throw new Exception("No se pudo agregar, compruebe el formato");
 
                     // Mostrar mensaje de éxito
@@ -561,7 +561,7 @@ public class VCreateConference extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-        ServiceStorageConferences serviceConferences = new ServiceStorageConferences(new RepositoryConferenceArrayList());
+        ServiciosConferencias serviceConferences = new ServiciosConferencias();
         int idOrganizer = 1;
         Runnable refreshCallback = null;
         /* Create and display the form */
