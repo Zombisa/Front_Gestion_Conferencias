@@ -1,10 +1,11 @@
 package views;
 
-import Services.ServiceStorageArticle;
-import Services.ServiceStorageAuthor;
-import Services.ServiceStorageConferences;
-import dataAccess.repositories.ArrayList.RepositoryArticleArrayList;
-import dataAccess.repositories.ArrayList.RepositoryConferenceArrayList;
+import models.Article;
+import models.Author;
+import models.Conference;
+import services.*;
+import utilities.Utilities;
+
 import java.awt.Color;
 import java.util.List;
 import javax.swing.*;
@@ -13,12 +14,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
-import models.Article;
-import models.Author;
-import models.Conference;
-import utilities.Utilities;
-import views.VProfileOrganizer.ButtonEditor;
-import views.VProfileOrganizer.ButtonRenderer;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -30,21 +25,20 @@ import views.VProfileOrganizer.ButtonRenderer;
  * @author Isabela Sánchez Saavedra <isanchez@unicauca.edu.co>
  */
 public class VConferenceOrganizer extends javax.swing.JFrame {
-     private ServiceStorageConferences serviceConference;
-     private ServiceStorageArticle serviceArticle;
-     private ServiceStorageAuthor serviceAuthor;
+     private ServiceConference serviceConference;
+     private ServiceArticle serviceArticle;
      private int idConference;
     /**
      * Creates new form VLogin
      */
-    public VConferenceOrganizer(ServiceStorageConferences serviceConference,ServiceStorageArticle serviceArticle ,int idConference) {
+    public VConferenceOrganizer(ServiceConference serviceConference, ServiceArticle serviceArticle ,int idConference) {
         initComponents();
         this.serviceArticle=serviceArticle;
         this.serviceConference=serviceConference;
         this.idConference=idConference;
-        Conference conference=serviceConference.getConferenceById(idConference);
+        Conference conference=serviceConference.getConference(idConference);
         jLabelShownName.setText(conference.getName());
-        List<Article> articles = serviceArticle.listArticlesByConferences(idConference);
+        List<Article> articles = serviceArticle.listArticlesByConference(idConference);
         listPapers(articles);
     }   
     public void listPapers(List<Article> Articles) {
@@ -66,7 +60,7 @@ public class VConferenceOrganizer extends javax.swing.JFrame {
            MyTable.addColumn("Informacion");  // Nueva columna para 
            MyTable.addColumn("Asignacion");  // Columna para "Ver más"
 
-            for (Article art : Articles) {
+            for (Article art : Articles) {                
                 Author author=serviceAuthor.getAuthor(art.getIdAuthor());
                 String nombreAutor=author.getName();
                 MyTable.addRow(new Object[]{nombreAutor,art.getName(), "INF", "Asignacion"});
@@ -75,7 +69,7 @@ public class VConferenceOrganizer extends javax.swing.JFrame {
            jTableArticles.setModel(MyTable);   
            
         // Asignar renderizadores y editores a las columnas "Informacion" y "Asignacion"
-        jTableArticles.getColumnModel().getColumn(2).setCellRenderer(new ButtonRenderer());
+        jTableArticles.getColumnModel().getColumn(2).setCellRenderer((TableCellRenderer) new ButtonRenderer());
         jTableArticles.getColumnModel().getColumn(2).setCellEditor( new ButtonEditorArticles(
                     new JCheckBox(), 
                     Articles, 
@@ -372,7 +366,7 @@ public class VConferenceOrganizer extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelMinimizeMouseClicked
     
     public void refreshArticlesById() {
-        List<Article> articles = serviceArticle.listArticlesByConferences(idConference);;
+        List<Article> articles = serviceArticle.listArticlesByConference(idConference);
         listPapers(articles);
     }
 
@@ -397,11 +391,11 @@ public class VConferenceOrganizer extends javax.swing.JFrame {
         private String label;
         private boolean isPushed;
         private List<Article> articles;
-        private ServiceStorageArticle service;  // AÃ±adir el servicio como atributo
+        private ServiceArticle service;  // AÃ±adir el servicio como atributo
         private String action; // Para identificar qué botón fue presionado
         private Runnable refreshCallback;  // El callback para refrescar la lista
 
-        public ButtonEditorArticles(JCheckBox checkBox, List<Article> articles, ServiceStorageArticle service, Runnable refreshCallback) {
+        public ButtonEditorArticles(JCheckBox checkBox, List<Article> articles, ServiceArticle service, Runnable refreshCallback) {
             super(checkBox);
             this.articles = articles;
             this.service = service;
@@ -461,75 +455,6 @@ public class VConferenceOrganizer extends javax.swing.JFrame {
         protected void fireEditingStopped() {
             super.fireEditingStopped();
         }
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VConferenceOrganizer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VConferenceOrganizer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VConferenceOrganizer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VConferenceOrganizer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                ServiceStorageConferences serviceConference = new ServiceStorageConferences(new RepositoryConferenceArrayList());
-                ServiceStorageArticle serviceArticle= new ServiceStorageArticle(new RepositoryArticleArrayList(),serviceConference);
-                int idConference = 1;
-                new VConferenceOrganizer(serviceConference,serviceArticle,idConference).setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

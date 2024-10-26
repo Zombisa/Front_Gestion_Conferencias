@@ -1,9 +1,7 @@
 package views;
 
-import ServiceFactory.ServiceFactoryArrayList;
-import Services.ServiceStorageConferences;
-import Services.ServiceStorageArticle;
-import dataAccess.repositories.ArrayList.RepositoryConferenceArrayList;
+import services.ServiceArticle;
+import services.ServiceConference;
 
 import java.awt.Color;
 import java.text.ParseException;
@@ -26,19 +24,19 @@ import utilities.Utilities;
 public class VPapers extends javax.swing.JFrame {
     private int idConference;
     private int idAuthor;
-    private ServiceStorageConferences serviceConferences;
-    private ServiceStorageArticle serviceArticle;
+    private ServiceConference serviceConferences;
+    private ServiceArticle serviceArticle;
     /**
      * Creates new form VLogin
      */
-    public VPapers(ServiceStorageConferences service,ServiceStorageArticle serviceArticle,int idConference,int idAuthor) {
+    public VPapers(ServiceConference service, ServiceArticle serviceArticle, int idConference, int idAuthor) {
         initComponents();
         this.serviceConferences=service;
         this.serviceArticle=serviceArticle;
         this.idAuthor=idAuthor;
         this.idConference=idConference;
-        serviceArticle = ServiceFactoryArrayList.getInstance().getServiceStorageArticle();
-        Conference conference=service.getConferenceById(idConference);
+        this.serviceArticle = serviceArticle;
+        Conference conference=service.getConference(idConference);
         jLabelShownName.setText(conference.getName());
     }
 
@@ -488,7 +486,7 @@ public class VPapers extends javax.swing.JFrame {
                 // Crear un nuevo objeto Article con las fechas formateada
                   Article newArticle= new Article(name,idAuthor,idConference,KeyWords,Date);
                    // Registrar la conferencia
-                    serviceArticle.addArticle(newArticle);
+                    serviceArticle.addArticleToConference(idConference, newArticle);
                     // Mostrar mensaje de éxito
                     JOptionPane.showMessageDialog(this, "Articulo enviado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 

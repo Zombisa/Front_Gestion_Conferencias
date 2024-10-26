@@ -4,8 +4,6 @@
  */
 package views;
 
-import Services.ServiceStorageConferences;
-import dataAccess.repositories.ArrayList.RepositoryConferenceArrayList;
 import java.awt.Color;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,6 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import models.Conference;
+import services.ServiceConference;
 import utilities.Utilities;
 
 /**
@@ -21,7 +20,7 @@ import utilities.Utilities;
  */
 public class VUpdateConference extends javax.swing.JFrame {
     private Conference conference;
-    private ServiceStorageConferences serviceConferences;
+    private ServiceConference serviceConferences;
     private VProfileOrganizer profileOrganizer;
     private int idOrganizer;
     private Runnable refreshCallback;
@@ -29,7 +28,7 @@ public class VUpdateConference extends javax.swing.JFrame {
     /**
      * Creates new form VProfileOrganizer
      */
-    public VUpdateConference(ServiceStorageConferences serviceConferences, int idOrganizer, Conference conference, Runnable refreshCallback) {
+    public VUpdateConference(ServiceConference serviceConferences, int idOrganizer, Conference conference, Runnable refreshCallback) {
         initComponents();
         this.serviceConferences = serviceConferences;
         this.idOrganizer = idOrganizer;
@@ -546,50 +545,6 @@ public class VUpdateConference extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jLabelConferencesMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VUpdateConference.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VUpdateConference.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VUpdateConference.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VUpdateConference.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        ServiceStorageConferences serviceConferences = new ServiceStorageConferences(new RepositoryConferenceArrayList());
-        int idOrganizer = 1;
-        Calendar calendar = Calendar.getInstance();
-        Date startDate = calendar.getTime();
-        calendar.add(Calendar.DAY_OF_MONTH, 1);
-        Date finishDate = calendar.getTime(); 
-        Conference conference = new Conference("","", startDate, finishDate, "", "", 1, idOrganizer);
-        Runnable rollback = null;
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VUpdateConference(serviceConferences, idOrganizer, conference, rollback).setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonEditar;

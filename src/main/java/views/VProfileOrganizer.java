@@ -4,8 +4,6 @@
  */
 package views;
 
-import PObserver.Observer;
-import Services.ServiceStorageConferences;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -15,22 +13,22 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import models.Conference;
+import services.ServiceConference;
 import utilities.Utilities;
 /**
  *
  * @author Isabela Sánchez Saavedra <isanchez@unicauca.edu.co>
  */
-public class VProfileOrganizer extends javax.swing.JFrame implements Observer{
+public class VProfileOrganizer extends javax.swing.JFrame{
 
     private List<Conference> conferenceList;
     private int idOrganizer;
-    private ServiceStorageConferences serviceConferences;
-    private VCreateConference createConferenceWindow;
+    private ServiceConference serviceConferences;
 
     /**
      * Creates new form JProfileOrganizer
      */
-    public VProfileOrganizer(ServiceStorageConferences service, int idOrganizer) {
+    public VProfileOrganizer(ServiceConference service, int idOrganizer) {
         initComponents();
         this.serviceConferences = service;
         this.idOrganizer = idOrganizer;
@@ -126,7 +124,6 @@ public class VProfileOrganizer extends javax.swing.JFrame implements Observer{
         jButtonRegister = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(800, 500));
         setUndecorated(true);
         setResizable(false);
 
@@ -181,8 +178,6 @@ public class VProfileOrganizer extends javax.swing.JFrame implements Observer{
         jTextFieldSearch.setForeground(new java.awt.Color(153, 153, 153));
         jTextFieldSearch.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanelNoConferences.add(jTextFieldSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 16, 260, 26));
-
-        jLabelLupa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lupa36.png"))); // NOI18N
         jPanelNoConferences.add(jLabelLupa, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, -1, -1));
 
         jPanelBackground.add(jPanelNoConferences, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 105, 330, -1));
@@ -193,8 +188,6 @@ public class VProfileOrganizer extends javax.swing.JFrame implements Observer{
         jPanelConferences.setPreferredSize(new java.awt.Dimension(330, 320));
         jPanelConferences.setRequestFocusEnabled(false);
         jPanelConferences.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabelLupa1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lupa36.png"))); // NOI18N
         jPanelConferences.add(jLabelLupa1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 10, -1, -1));
 
         jTextFieldSearch1.setBackground(new java.awt.Color(255, 255, 255));
@@ -317,7 +310,6 @@ public class VProfileOrganizer extends javax.swing.JFrame implements Observer{
 
         jLabelLogo.setFont(new java.awt.Font("Montserrat", 1, 18)); // NOI18N
         jLabelLogo.setForeground(new java.awt.Color(193, 255, 114));
-        jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/triangle32.png"))); // NOI18N
         jLabelLogo.setText("meeting");
         jPanelHeader.add(jLabelLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 0, -1, 72));
 
@@ -479,9 +471,8 @@ public class VProfileOrganizer extends javax.swing.JFrame implements Observer{
         loadConferences(conferences);
     }
 
-    @Override
     public void update(Object o) {
-        this.serviceConferences = (ServiceStorageConferences) o;
+        this.serviceConferences = (ServiceConference) o;
         loadConferences(serviceConferences.listConferencesByOrganizer(idOrganizer));
 
     }
@@ -507,11 +498,11 @@ public class VProfileOrganizer extends javax.swing.JFrame implements Observer{
         private String label;
         private boolean isPushed;
         private List<Conference> conferences;
-        private ServiceStorageConferences service;  // AÃ±adir el servicio como atributo
+        private ServiceConference service;  // AÃ±adir el servicio como atributo
         private String action; // Para identificar qué botón fue presionado
         private Runnable refreshCallback;  // El callback para refrescar la lista
 
-        public ButtonEditor(JCheckBox checkBox, List<Conference> conferences, ServiceStorageConferences service, Runnable refreshCallback) {
+        public ButtonEditor(JCheckBox checkBox, List<Conference> conferences, ServiceConference service, Runnable refreshCallback) {
             super(checkBox);
             this.conferences = conferences;
             this.service = service;
@@ -553,15 +544,15 @@ public class VProfileOrganizer extends javax.swing.JFrame implements Observer{
                     VUpdateConference updateWindow = new VUpdateConference(serviceConferences, idOrganizer, selectedConference, refreshCallback);
                     updateWindow.setVisible(true);  // Mostrar la ventana para editar
                 } else if (action.equals("borrar")) {
-                    service.deleteConferenceById(selectedConference.getIdConference());
+                    service.deleteConference(selectedConference.getIdConference());
                     if (refreshCallback != null) {
                         refreshCallback.run();
                     }
                 } else if (action.equals("ver")) {
                     // Lógica para ver más detalles
                     int idConference = selectedConference.getIdConference();
-                    VConferenceInfo infoWindow = new VConferenceInfo(service, idConference);
-                    infoWindow.setVisible(true);  // Mostrar la ventana con la información de la conferencia
+                   // VConferenceInfo infoWindow = new VConferenceInfo(service, idConference);
+                    //infoWindow.setVisible(true);  // Mostrar la ventana con la información de la conferencia
                 }
             }
             isPushed = false;

@@ -1,7 +1,8 @@
 package views;
 
 import models.Conference;
-import servicios.ServiciosConferencias;
+import utilities.Utilities;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -14,9 +15,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
-import models.Conference;
-import utilities.Utilities;
-
+import services.ServiceArticle;
+import services.ServiceConference;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -25,19 +25,23 @@ import utilities.Utilities;
  *
  * @author Isabela Sánchez Saavedra <isanchez@unicauca.edu.co>
  */
-public class VConferences extends javax.swing.JFrame {
-    private ServiciosConferencias service;
+public class VConferences extends javax.swing.JFrame{
+    private ServiceConference service;
+     private ServiceArticle serviceArticle;
     private List<Conference> conferenceList;
     private Runnable refreshCallback; 
+    private int idAuthor;
 
     /**
      * Creates new form VLogin
      */
-    public VConferences(ServiciosConferencias service, Runnable refreshCallback) {
+    public VConferences(ServiceConference service, ServiceArticle serviceArticle, int idAuthor, Runnable refreshCallback) {
         this.service = service;
+        this.serviceArticle=serviceArticle;
+        this.idAuthor=idAuthor;
         this.refreshCallback = refreshCallback;
         initComponents();
-        List<Conference> conferences = service.listarConference();
+        List<Conference> conferences = service.listConferences();
         
         loadConferences(conferences);
     }
@@ -375,14 +379,14 @@ public class VConferences extends javax.swing.JFrame {
     }
 
     private void refreshConferences() {
-        List<Conference> updatedConferences = service.listarConference();
+        List<Conference> updatedConferences = service.listConferences();
         loadConferences(updatedConferences);
     }
 
 
     public void update(Object o) {
-        service = (ServiciosConferencias)o;
-        loadConferences(service.listarConference());
+        service = (ServiceConference)o;
+        loadConferences(service.listConferences());
     }
     
     
@@ -407,10 +411,10 @@ public class VConferences extends javax.swing.JFrame {
         private String label;
         private boolean isPushed;
         private List<Conference> conferences;
-        private ServiciosConferencias service;  // Añadir el servicio como atributo
+        private ServiceConference service;  // Añadir el servicio como atributo
         private Runnable refreshCallback; 
 
-        public ButtonEditor(JCheckBox checkBox, List<Conference> conferences, ServiciosConferencias service, Runnable refreshCallback) {
+        public ButtonEditor(JCheckBox checkBox, List<Conference> conferences, ServiceConference service, Runnable refreshCallback) {
             super(checkBox);
             this.conferences = conferences;
             this.service = service;  // Inicializar el servicio
@@ -442,7 +446,7 @@ public class VConferences extends javax.swing.JFrame {
                 int idConference = selectedConference.getIdConference();
 
                 // Abrir la ventana VConferenceInfo con el service y el idConference
-                VConferenceInfo infoWindow = new VConferenceInfo(service, idConference);
+                VConferenceInfo infoWindow = new VConferenceInfo(service,serviceArticle, idConference,idAuthor);
                 infoWindow.setVisible(true);  // Mostrar la ventana con la información de la conferencia
             }
             isPushed = false;

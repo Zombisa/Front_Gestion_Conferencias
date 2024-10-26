@@ -1,11 +1,11 @@
 package views;
-import models.Conference;
-import servicios.ServiciosConferencias;
+import services.ServiceConference;
 import java.awt.Color;
 
 import utilities.Utilities;
 
 import models.Conference;
+import services.ServiceArticle;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -19,19 +19,19 @@ public class VConferenceInfo extends javax.swing.JFrame {
     private int idConference;
     private int idAuthor;
     private Conference conference;
-    private ServiciosConferencias serviceConferences;
-    private ServiceStorageArticle serviceArticle;
+    private ServiceConference serviceConferences;
+    private ServiceArticle serviceArticle;
     
     /**
      * Creates new form 
      */
    
-    public VConferenceInfo(ServiciosConferencias service,ServicosArticle serviceArticle,int idConference,int idAuthor) {
+    public VConferenceInfo(ServiceConference service,ServiceArticle serviceArticle,int idConference,int idAuthor) {
         initComponents();
         this.serviceConferences = service;
         this.serviceArticle=serviceArticle;
         this.idAuthor=idAuthor;
-        this.conference = service.consultarConferencia(idConference);
+        this.conference = service.getConference(idConference);
         this.idConference = idConference;
         mostrarDatos(conference);
         mostrarBoton(conference);
