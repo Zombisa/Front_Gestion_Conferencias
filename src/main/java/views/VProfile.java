@@ -1,6 +1,9 @@
 package views;
 
 import java.awt.Color;
+import models.User;
+import services.ServiceConference;
+import services.ServiceUser;
 import utilities.Utilities;
 
 /*
@@ -13,12 +16,17 @@ import utilities.Utilities;
  * @author Isabela Sánchez Saavedra <isanchez@unicauca.edu.co>
  */
 public class VProfile extends javax.swing.JFrame {
-    
+    User user;
+    ServiceUser serviceUser;
+    ServiceConference serviceConference;
     /**
      * Creates new form VLogin
      */
-    public VProfile() {
+    public VProfile(User user, ServiceUser serviceUser) {
         initComponents();
+        this.user = user;
+        this.serviceUser = serviceUser;
+        displayUserInfo();
     }
 
     /**
@@ -153,7 +161,6 @@ public class VProfile extends javax.swing.JFrame {
 
         jLabelLogo.setFont(new java.awt.Font("Montserrat", 1, 18)); // NOI18N
         jLabelLogo.setForeground(new java.awt.Color(193, 255, 114));
-        jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/triangle32.png"))); // NOI18N
         jLabelLogo.setText("meeting");
         jPanelHeader.add(jLabelLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 0, -1, 60));
 
@@ -170,6 +177,11 @@ public class VProfile extends javax.swing.JFrame {
         jComboBoxProfile.setBackground(new java.awt.Color(1, 143, 166));
         jComboBoxProfile.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
         jComboBoxProfile.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Autor", "Organizador" }));
+        jComboBoxProfile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxProfileActionPerformed(evt);
+            }
+        });
         jPanelHeader.add(jComboBoxProfile, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 10, -1, 40));
 
         jPanelBackground.add(jPanelHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 60));
@@ -249,7 +261,6 @@ public class VProfile extends javax.swing.JFrame {
         jPanelConferences.setBackground(new java.awt.Color(255, 255, 255));
         jPanelConferences.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabelLupa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lupa36.png"))); // NOI18N
         jLabelLupa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanelConferences.add(jLabelLupa, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 0, -1, 50));
 
@@ -321,6 +332,32 @@ public class VProfile extends javax.swing.JFrame {
     private void jLabelMinimizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMinimizeMouseClicked
         Utilities.minimizeWindow(this);
     }//GEN-LAST:event_jLabelMinimizeMouseClicked
+
+    private void jComboBoxProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxProfileActionPerformed
+        if (jComboBoxProfile.isVisible() && "Organizador".equals(jComboBoxProfile.getSelectedItem())) {
+                int idOrganizer = user.getId();
+                VProfileOrganizer profileOrganizer = new VProfileOrganizer(serviceConference, idOrganizer);
+                profileOrganizer.setVisible(true);
+            }
+    }//GEN-LAST:event_jComboBoxProfileActionPerformed
+
+    private boolean isUserAuthorAndOrganizer(User user) {
+        String role = serviceUser.getUserRole(user);
+        return role != null && role.contains("Autor") && role.contains("Organizador");
+    }
+    
+    private void displayUserInfo() {
+        jLabelFullName.setText(user.getName());
+        jLabelShownCode.setText(String.valueOf(user.getId())); 
+        jLabelShownTheme.setText("Tema genérico"); 
+        
+        if (isUserAuthorAndOrganizer(user)) {
+            this.jComboBoxProfile.setVisible(true); // Mostrar el ComboBox
+        } else {
+            this.jComboBoxProfile.setVisible(false);
+        }
+    }
+    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

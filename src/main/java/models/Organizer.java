@@ -1,30 +1,10 @@
 package models;
 
-public class Organizer extends Author{
-
-    public Organizer(String name, int id) {
-        super(name, id);
+public class Organizer extends Author {
+    public Organizer(int id, String name, String email, int phone, String password) {
+        super(id, name, email, phone, password);
     }
-
-    public Organizer copy(){
-        return new Organizer(
-                this.getName(),
-                this.getId()
-        );
+    public Organizer() {
+        super();
     }
-    /**
-     * @return the name
-     */
-    public String getName() {
-        return super.getName();
-    }
-
-    /**
-     * @return the id
-     */
-    public int getId() {
-        return super.getId();
-    }
-    
-    
 }

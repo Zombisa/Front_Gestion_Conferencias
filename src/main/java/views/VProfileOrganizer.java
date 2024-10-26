@@ -20,8 +20,6 @@ import utilities.Utilities;
  * @author Isabela Sánchez Saavedra <isanchez@unicauca.edu.co>
  */
 public class VProfileOrganizer extends javax.swing.JFrame{
-
-    private List<Conference> conferenceList;
     private int idOrganizer;
     private ServiceConference serviceConferences;
 

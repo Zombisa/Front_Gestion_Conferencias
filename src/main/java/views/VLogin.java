@@ -1,6 +1,10 @@
 package views;
 
 import java.awt.Color;
+import javax.swing.JOptionPane;
+import models.User;
+
+import services.ServiceUser;
 import utilities.Utilities;
 
 /*
@@ -13,7 +17,8 @@ import utilities.Utilities;
  * @author Isabela Sánchez Saavedra <isanchez@unicauca.edu.co>
  */
 public class VLogin extends javax.swing.JFrame {
-    
+    private ServiceUser serviceUser;
+
     /**
      * Creates new form VLogin
      */
@@ -216,6 +221,11 @@ public class VLogin extends javax.swing.JFrame {
                 jButtonLoginMouseExited(evt);
             }
         });
+        jButtonLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLoginActionPerformed(evt);
+            }
+        });
 
         jPasswordField.setBackground(new java.awt.Color(255, 255, 255));
         jPasswordField.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
@@ -359,6 +369,24 @@ public class VLogin extends javax.swing.JFrame {
     private void jLabelMinimizeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMinimizeMouseExited
         Utilities.changeColorOnMouseExit(jPanelMinimize, jLabelMinimize, Utilities.AZUL_FONDO, Color.black);
     }//GEN-LAST:event_jLabelMinimizeMouseExited
+
+    private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
+        String email = jTextFieldEmail.getText();
+        String password = String.valueOf(jPasswordField.getPassword());
+
+        try {
+            // Intenta iniciar sesión
+            User loggedInUser = serviceUser.loginUser(email, password);
+
+            // Si el login es exitoso, abre la ventana VProfile
+            VProfile vProfile = new VProfile(loggedInUser, serviceUser); // Pasa el usuario a VProfile
+            vProfile.setVisible(true); // Muestra la ventana de perfil
+            this.dispose(); // Cierra la ventana de login
+        } catch (RuntimeException e) {
+            // Manejo de errores en caso de login fallido
+            JOptionPane.showMessageDialog(this, "Login fallido: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButtonLoginActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

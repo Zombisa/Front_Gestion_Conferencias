@@ -1,37 +1,17 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package models;
 
-public class Author {
-    private String name;
-    private int id;
-
-    /** 
-     * @param name user name
-     * @param id id user, it comes from the users
-     */
-    public Author(String name, int id) {
-        this.name = name;
-        this.id = id;
-        
+/**
+ *
+ * @author isabe
+ */
+public class Author extends User{
+    public Author(int id, String name, String email, int phone, String password) {
+        super(id, name, email, name, phone, password);
     }
-    public Author copy(){
-        return new Author(
-                this.getName(),
-                this.getId()
-        );
-    }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-   
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    
+    public Author(){}
 }
+

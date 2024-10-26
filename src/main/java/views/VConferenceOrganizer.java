@@ -1,7 +1,7 @@
 package views;
 
 import models.Article;
-import models.Author;
+import models.User;
 import models.Conference;
 import services.*;
 import utilities.Utilities;
@@ -27,6 +27,7 @@ import javax.swing.table.TableCellRenderer;
 public class VConferenceOrganizer extends javax.swing.JFrame {
      private ServiceConference serviceConference;
      private ServiceArticle serviceArticle;
+     private ServiceUser serviceUser;
      private int idConference;
     /**
      * Creates new form VLogin
@@ -41,6 +42,7 @@ public class VConferenceOrganizer extends javax.swing.JFrame {
         List<Article> articles = serviceArticle.listArticlesByConference(idConference);
         listPapers(articles);
     }   
+    
     public void listPapers(List<Article> Articles) {
         if (Articles.isEmpty()) {
             jTableNoArticles.setVisible(true);
@@ -61,7 +63,7 @@ public class VConferenceOrganizer extends javax.swing.JFrame {
            MyTable.addColumn("Asignacion");  // Columna para "Ver más"
 
             for (Article art : Articles) {                
-                Author author=serviceAuthor.getAuthor(art.getIdAuthor());
+                User author=serviceUser.getUser(art.getIdAuthor());
                 String nombreAutor=author.getName();
                 MyTable.addRow(new Object[]{nombreAutor,art.getName(), "INF", "Asignacion"});
             }
