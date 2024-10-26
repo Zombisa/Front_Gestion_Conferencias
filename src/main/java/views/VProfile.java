@@ -341,9 +341,9 @@ public class VProfile extends javax.swing.JFrame {
             }
     }//GEN-LAST:event_jComboBoxProfileActionPerformed
 
-    private boolean isUserAuthorAndOrganizer(User user) {
+    private boolean isUserOrganizer(User user) {
         String role = serviceUser.getUserRole(user);
-        return role != null && role.contains("Autor") && role.contains("Organizador");
+        return role.equals("Organizador");
     }
     
     private void displayUserInfo() {
@@ -351,7 +351,7 @@ public class VProfile extends javax.swing.JFrame {
         jLabelShownCode.setText(String.valueOf(user.getId())); 
         jLabelShownTheme.setText("Tema genérico"); 
         
-        if (isUserAuthorAndOrganizer(user)) {
+        if (isUserOrganizer(user)) {
             this.jComboBoxProfile.setVisible(true); // Mostrar el ComboBox
         } else {
             this.jComboBoxProfile.setVisible(false);
