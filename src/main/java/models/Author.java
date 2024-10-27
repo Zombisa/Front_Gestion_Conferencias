@@ -9,7 +9,7 @@ package models;
  * @author isabe
  */
 public class Author extends User{
-    public Author(int id, String name, String email, int phone, String password) {
+    public Author(String id, String name, String email, int phone, String password) {
         super(id, name, email, name, phone, password);
     }
     public Author(){}

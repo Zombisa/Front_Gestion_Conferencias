@@ -30,12 +30,12 @@ public class VConferences extends javax.swing.JFrame{
     private ServiceArticle serviceArticle;
     private List<Conference> conferenceList;
     private Runnable refreshCallback; 
-    private int idAuthor;
+    private String idAuthor;
 
     /**
      * Creates new form VLogin
      */
-    public VConferences(ServiceConference service, ServiceArticle serviceArticle, int idAuthor, Runnable refreshCallback) {
+    public VConferences(ServiceConference service, ServiceArticle serviceArticle, String idAuthor, Runnable refreshCallback) {
         this.service = service;
         this.serviceArticle=serviceArticle;
         this.idAuthor=idAuthor;
@@ -443,10 +443,10 @@ public class VConferences extends javax.swing.JFrame{
                 Conference selectedConference = conferences.get(jTableConferences.getSelectedRow());
 
                 // Obtener el id de la conferencia seleccionada
-                int idConference = selectedConference.getIdConference();
+                String idConference = selectedConference.getIdConference();
 
                 // Abrir la ventana VConferenceInfo con el service y el idConference
-                VConferenceInfo infoWindow = new VConferenceInfo(service,serviceArticle, idConference,idAuthor);
+                VConferenceInfo infoWindow = new VConferenceInfo(service,serviceArticle, idConference, idAuthor);
                 infoWindow.setVisible(true);  // Mostrar la ventana con la información de la conferencia
             }
             isPushed = false;

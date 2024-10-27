@@ -20,13 +20,13 @@ import utilities.Utilities;
  * @author Isabela Sánchez Saavedra <isanchez@unicauca.edu.co>
  */
 public class VProfileOrganizer extends javax.swing.JFrame{
-    private int idOrganizer;
+    private String idOrganizer;
     private ServiceConference serviceConferences;
 
     /**
      * Creates new form JProfileOrganizer
      */
-    public VProfileOrganizer(ServiceConference service, int idOrganizer) {
+    public VProfileOrganizer(ServiceConference service, String idOrganizer) {
         initComponents();
         this.serviceConferences = service;
         this.idOrganizer = idOrganizer;
@@ -548,7 +548,7 @@ public class VProfileOrganizer extends javax.swing.JFrame{
                     }
                 } else if (action.equals("ver")) {
                     // Lógica para ver más detalles
-                    int idConference = selectedConference.getIdConference();
+                    String idConference = selectedConference.getIdConference();
                    // VConferenceInfo infoWindow = new VConferenceInfo(service, idConference);
                     //infoWindow.setVisible(true);  // Mostrar la ventana con la información de la conferencia
                 }

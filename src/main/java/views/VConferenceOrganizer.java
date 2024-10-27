@@ -28,11 +28,11 @@ public class VConferenceOrganizer extends javax.swing.JFrame {
      private ServiceConference serviceConference;
      private ServiceArticle serviceArticle;
      private ServiceUser serviceUser;
-     private int idConference;
+     private String idConference;
     /**
      * Creates new form VLogin
      */
-    public VConferenceOrganizer(ServiceConference serviceConference, ServiceArticle serviceArticle ,int idConference) {
+    public VConferenceOrganizer(ServiceConference serviceConference, ServiceArticle serviceArticle ,String idConference) {
         initComponents();
         this.serviceArticle=serviceArticle;
         this.serviceConference=serviceConference;

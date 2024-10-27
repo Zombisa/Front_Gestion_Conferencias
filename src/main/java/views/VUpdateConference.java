@@ -24,13 +24,13 @@ public class VUpdateConference extends javax.swing.JFrame {
     private Conference conference;
     private ServiceConference serviceConferences;
     private VProfileOrganizer profileOrganizer;
-    private int idOrganizer;
+    private String idOrganizer;
     private Runnable refreshCallback;
 
     /**
      * Creates new form VProfileOrganizer
      */
-    public VUpdateConference(ServiceConference serviceConferences, int idOrganizer, Conference conference, Runnable refreshCallback) {
+    public VUpdateConference(ServiceConference serviceConferences, String idOrganizer, Conference conference, Runnable refreshCallback) {
         initComponents();
         this.serviceConferences = serviceConferences;
         this.idOrganizer = idOrganizer;

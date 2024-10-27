@@ -2,8 +2,8 @@ package models;
 
 public class Article {
     private String name;
-    private final int idAuthor;
-    private final int idConference;
+    private final String idAuthor;
+    private final String idConference;
     private String keyWords;
     private BasicDate publishDate;
 
@@ -15,7 +15,7 @@ public class Article {
      */
   
     
-    public Article(String name, int idAuthor, int idConference, String keyWords, BasicDate publishDate) {
+    public Article(String name, String idAuthor, String idConference, String keyWords, BasicDate publishDate) {
         this.name = name;
         this.idAuthor = idAuthor;
         this.idConference = idConference;
@@ -44,8 +44,8 @@ public class Article {
     public void setName(String name) {
         this.name = name;
     }
-    public int getIdAuthor() {return this.idAuthor;}
-    public int getIdConference() {return idConference;}
+    public String getIdAuthor() {return this.idAuthor;}
+    public String getIdConference() {return idConference;}
     public String getKeyWords() {return keyWords;}
     public void setKeyWords(String keyWords) {this.keyWords = keyWords;}
     public BasicDate getPublishDate() {return publishDate;}

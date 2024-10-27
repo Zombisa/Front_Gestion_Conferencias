@@ -16,8 +16,8 @@ import services.ServiceArticle;
  * @author Isabela Mosquera Fernandez <isabelamosquera@unicauca.edu.co>
  */
 public class VConferenceInfo extends javax.swing.JFrame {
-    private int idConference;
-    private int idAuthor;
+    private String idConference;
+    private String idAuthor;
     private Conference conference;
     private ServiceConference serviceConferences;
     private ServiceArticle serviceArticle;
@@ -26,7 +26,7 @@ public class VConferenceInfo extends javax.swing.JFrame {
      * Creates new form 
      */
    
-    public VConferenceInfo(ServiceConference service,ServiceArticle serviceArticle,int idConference,int idAuthor) {
+    public VConferenceInfo(ServiceConference service,ServiceArticle serviceArticle,String idConference, String idAuthor) {
         initComponents();
         this.serviceConferences = service;
         this.serviceArticle=serviceArticle;

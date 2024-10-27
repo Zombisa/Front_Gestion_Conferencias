@@ -29,7 +29,7 @@ public class ServiceArticle {
     }
 
     // POST /api/articles/conference/{idConference}
-    public Article addArticleToConference(Integer idConference, Article article) {
+    public Article addArticleToConference(String idConference, Article article) {
         WebTarget target = client.target(this.endPoint + "/conference/" + idConference);
         Entity<Article> data = Entity.entity(article, MediaType.APPLICATION_JSON_TYPE);
 
@@ -44,7 +44,7 @@ public class ServiceArticle {
     }
     
     // GET /api/articles/conferences/{idConference}
-    public List<Article> listArticlesByConference(Integer idConference) {
+    public List<Article> listArticlesByConference(String idConference) {
         WebTarget target = client.target(this.endPoint + "/conferences/" + idConference);
         // Realiza la solicitud GET y obtiene la respuesta
         Response response = target.request(MediaType.APPLICATION_JSON_TYPE).get();
@@ -59,7 +59,7 @@ public class ServiceArticle {
     }
 
     // GET /api/articles/author/{idAuthor}
-    public List<Article> listArticlesByAuthor(Integer idAuthor) {
+    public List<Article> listArticlesByAuthor(String idAuthor) {
         WebTarget target = client.target(this.endPoint + "/author/" + idAuthor);
         // Realiza la solicitud GET y obtiene la respuesta
         Response response = target.request(MediaType.APPLICATION_JSON_TYPE).get();
@@ -74,7 +74,7 @@ public class ServiceArticle {
     }
 
     // PUT /api/articles/{idArticle}
-    public Article updateArticle(Integer idArticle, Article article) {
+    public Article updateArticle(String idArticle, Article article) {
         WebTarget target = client.target(this.endPoint + "/" + idArticle);
         Entity<Article> data = Entity.entity(article, MediaType.APPLICATION_JSON_TYPE);
 
@@ -89,7 +89,7 @@ public class ServiceArticle {
     }
 
     // DELETE /api/articles/{idArticle}
-    public boolean deleteArticle(Integer idArticle) {
+    public boolean deleteArticle(String idArticle) {
         WebTarget target = client.target(this.endPoint + "/" + idArticle);
         Response response = target.request(MediaType.APPLICATION_JSON_TYPE).delete();
 

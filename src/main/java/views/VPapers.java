@@ -23,14 +23,14 @@ import utilities.Utilities;
  * @author Isabela Mosquera Fernanandez <isabelamosquera@unicauca.edu.co>
  */
 public class VPapers extends javax.swing.JFrame {
-    private int idConference;
-    private int idAuthor;
+    private String idConference;
+    private String idAuthor;
     private ServiceConference serviceConferences;
     private ServiceArticle serviceArticle;
     /**
      * Creates new form VLogin
      */
-    public VPapers(ServiceConference service, ServiceArticle serviceArticle, int idConference, int idAuthor) {
+    public VPapers(ServiceConference service, ServiceArticle serviceArticle, String idConference, String idAuthor) {
         initComponents();
         this.serviceConferences=service;
         this.serviceArticle=serviceArticle;

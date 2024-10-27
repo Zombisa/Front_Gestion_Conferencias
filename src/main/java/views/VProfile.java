@@ -347,14 +347,14 @@ public class VProfile extends javax.swing.JFrame {
 
     private void jComboBoxProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxProfileActionPerformed
         if (jComboBoxProfile.isVisible() && "Organizador".equals(jComboBoxProfile.getSelectedItem())) {
-                int idOrganizer = user.getId();
+                String idOrganizer = user.getId();
                 VProfileOrganizer profileOrganizer = new VProfileOrganizer(serviceConference, idOrganizer);
                 profileOrganizer.setVisible(true);
             }
     }//GEN-LAST:event_jComboBoxProfileActionPerformed
 
     private void jLabelConferencesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelConferencesMouseClicked
-        int idAuthor =  user.getId();
+        String idAuthor =  user.getId();
 
         // Crear una Runnable para la callback de refresco (puedes personalizarlo según tus necesidades)
         Runnable refreshCallback = () -> {

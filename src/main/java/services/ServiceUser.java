@@ -28,7 +28,7 @@ public class ServiceUser {
     }
     
     //GET /api/users/{id}
-    public User getUser(Integer idUser) {
+    public User getUser(String idUser) {
         WebTarget target = client.target(this.endPoint + "/" + idUser);
         Response response = target.request(MediaType.APPLICATION_JSON_TYPE).get();
 
@@ -55,7 +55,7 @@ public class ServiceUser {
     }
 
     // DELETE /api/users/{id}
-    public boolean deleteUser(Integer id) {
+    public boolean deleteUser(String id) {
         WebTarget target = client.target(this.endPoint + "/" + id);
         Response response = target.request(MediaType.APPLICATION_JSON_TYPE).delete();
 
@@ -77,7 +77,7 @@ public class ServiceUser {
         // Verifica si las credenciales coinciden con el usuario quemado
         if (email.equals(hardcodedEmail) && password.equals(hardcodedPassword)) {
             User hardcodedUser = new User();
-            hardcodedUser.setId(1);
+            hardcodedUser.setId("1");
             hardcodedUser.setEmail(hardcodedEmail);
             hardcodedUser.setPassword(hardcodedPassword);
             hardcodedUser.setName("Usuario Quemado"); // Nombre o datos adicionales del usuario quemado

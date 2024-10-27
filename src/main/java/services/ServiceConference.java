@@ -32,7 +32,7 @@ public class ServiceConference {
     }
 
     //GET conference/id
-    public Conference getConference(Integer id) {
+    public Conference getConference(String id) {
         Conference objConference = null;
 
         WebTarget target = conference.target(this.endPoint + "/" + id);
@@ -56,7 +56,7 @@ public class ServiceConference {
     }
 
     //GET conference/organizer/{id}
-    public List<Conference> listConferencesByOrganizer(Integer organizerId) {
+    public List<Conference> listConferencesByOrganizer(String organizerId) {
         WebTarget target = conference.target(this.endPoint + "/organizer/" + organizerId);
         // Realiza la solicitud GET y obtiene la respuesta
         Response response = target.request(MediaType.APPLICATION_JSON_TYPE).get();
@@ -88,7 +88,7 @@ public class ServiceConference {
     }
 
     //PUT conference/id
-    public Conference updateConference(Conference objConferenceActualizar, Integer id) {
+    public Conference updateConference(Conference objConferenceActualizar, String id) {
         WebTarget target = conference.target(this.endPoint + "/" + id);
         Entity<Conference> data = Entity.entity(objConferenceActualizar, MediaType.APPLICATION_JSON_TYPE);
 
@@ -102,7 +102,7 @@ public class ServiceConference {
     }
     
     //DeleteMapping
-    public Boolean deleteConference(Integer id) {
+    public Boolean deleteConference(String id) {
         WebTarget target = conference.target(this.endPoint + "/" + id);
         Response response = target.request(MediaType.APPLICATION_JSON_TYPE).delete();
         // Verificar el código de estado

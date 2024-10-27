@@ -21,13 +21,13 @@ import utilities.Utilities;
 public class VCreateConference extends javax.swing.JFrame {
     private ServiceConference serviceConferences;
     private VProfileOrganizer profileOrganizer;
-    private int idOrganizer;
+    private String idOrganizer;
     private Runnable refreshCallback;  // Función para notificar a la ventana principal
     
     /**
      * Creates new form VProfileOrganizer
      */
-    public VCreateConference(ServiceConference serviceConferences, int idOrganizer, Runnable refreshCallback) {
+    public VCreateConference(ServiceConference serviceConferences, String idOrganizer, Runnable refreshCallback) {
         initComponents();
         this.serviceConferences = serviceConferences;
         this.idOrganizer = idOrganizer;
@@ -449,7 +449,7 @@ public class VCreateConference extends javax.swing.JFrame {
                 // Crear un nuevo objeto Conference con las fechas formateadas
                 Conference newConference = new Conference(
                         name, description, startBasicDate, finishBasicDate, place, theme,
-                        (serviceConferences.listConferences().size() + 1), idOrganizer
+                        String.valueOf((serviceConferences.listConferences().size() + 1)), String.valueOf(idOrganizer)
                 );
 
                 // Registrar la conferencia
