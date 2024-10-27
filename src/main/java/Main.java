@@ -1,4 +1,6 @@
 
+import serviceFactory.ServiceFactory;
+import services.ServiceUser;
 import views.VLogin;
 
 /*
@@ -16,7 +18,9 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        VLogin VtnLogin = new VLogin();
+        ServiceFactory serviceFactory = ServiceFactory.getInstance();
+        ServiceUser serviceUser = serviceFactory.getServiceUser();
+        VLogin VtnLogin = new VLogin(serviceUser);
         VtnLogin.setVisible(true);
     }
     

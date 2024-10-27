@@ -22,7 +22,8 @@ public class VLogin extends javax.swing.JFrame {
     /**
      * Creates new form VLogin
      */
-    public VLogin() {
+    public VLogin(ServiceUser serviceUser) {
+        this.serviceUser = serviceUser;
         initComponents();
     }
 
