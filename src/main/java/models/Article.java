@@ -1,14 +1,11 @@
-
 package models;
-
-import java.util.Date;
 
 public class Article {
     private String name;
     private final int idAuthor;
     private final int idConference;
     private String keyWords;
-    private Date publishDate;
+    private BasicDate publishDate;
 
     
     /**
@@ -18,7 +15,7 @@ public class Article {
      */
   
     
-    public Article(String name, int idAuthor, int idConference, String keyWords, Date publishDate) {
+    public Article(String name, int idAuthor, int idConference, String keyWords, BasicDate publishDate) {
         this.name = name;
         this.idAuthor = idAuthor;
         this.idConference = idConference;
@@ -51,6 +48,6 @@ public class Article {
     public int getIdConference() {return idConference;}
     public String getKeyWords() {return keyWords;}
     public void setKeyWords(String keyWords) {this.keyWords = keyWords;}
-    public Date getPublishDate() {return publishDate;}
-    public void setPublishDate(Date publishDate) {this.publishDate = publishDate;}
+    public BasicDate getPublishDate() {return publishDate;}
+    public void setPublishDate(BasicDate publishDate) {this.publishDate = publishDate;}
 }

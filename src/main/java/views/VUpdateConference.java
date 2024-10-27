@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import models.BasicDate;
 import models.Conference;
 import services.ServiceConference;
 import utilities.Utilities;
@@ -19,12 +20,13 @@ import utilities.Utilities;
  * @author Isabela Sánchez Saavedra <isanchez@unicauca.edu.co>
  */
 public class VUpdateConference extends javax.swing.JFrame {
+
     private Conference conference;
     private ServiceConference serviceConferences;
     private VProfileOrganizer profileOrganizer;
     private int idOrganizer;
     private Runnable refreshCallback;
-    
+
     /**
      * Creates new form VProfileOrganizer
      */
@@ -432,40 +434,46 @@ public class VUpdateConference extends javax.swing.JFrame {
                 return;
             }
 
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-            Date startDateFormatted, finishDateFormatted;
+            String[] startDateParts = startDate.split("/");
+            String[] finishDateParts = finishDate.split("/");
 
             try {
-                // Formatear la fecha de inicio
-                startDateFormatted = formatter.parse(startDate);
+                // Crear el objeto BasicDate para la fecha de inicio
+                BasicDate startBasicDate = new BasicDate(
+                        Integer.parseInt(startDateParts[0]), // día
+                        Integer.parseInt(startDateParts[1]), // mes
+                        Integer.parseInt(startDateParts[2]) // año
+                );
 
-                try {
-                    // Formatear la fecha de fin
-                    finishDateFormatted = formatter.parse(finishDate);
+                // Crear el objeto BasicDate para la fecha de fin
+                BasicDate finishBasicDate = new BasicDate(
+                        Integer.parseInt(finishDateParts[0]),
+                        Integer.parseInt(finishDateParts[1]),
+                        Integer.parseInt(finishDateParts[2])
+                );
 
-                    // Crear un nuevo objeto Conference con las fechas formateadas
-                    Conference newConference = new Conference(name,description,  startDateFormatted ,finishDateFormatted, place, theme, this.conference.getIdConference(), idOrganizer);
-                    
-                    // Editar la conferencia
-                    if(serviceConferences.updateConference(newConference, conference.getIdConference()) == null)
-                        throw new Exception("No se pudo actualizar");
+                // Crear un nuevo objeto Conference con las fechas formateadas
+                Conference newConference = new Conference(
+                        name, description, startBasicDate, finishBasicDate, place, theme,
+                        this.conference.getIdConference(), idOrganizer
+                );
 
-                    if (refreshCallback != null) {
-                        refreshCallback.run();  // Ejecutamos el método de refresco
-                    }
-                    
-                    // Mostrar mensaje de éxito
-                    JOptionPane.showMessageDialog(this, "Conferencia editada con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                    
-                    this.dispose();
-
-                } catch (ParseException e) {
-                    JOptionPane.showMessageDialog(this, "La fecha de fin no sigue el formato dd/MM/yyyy", "Fecha incorrecta", JOptionPane.WARNING_MESSAGE);
-                    e.printStackTrace();
+                // Editar la conferencia
+                if (serviceConferences.updateConference(newConference, conference.getIdConference()) == null) {
+                    throw new Exception("No se pudo actualizar");
                 }
 
-            } catch (ParseException e) {
-                JOptionPane.showMessageDialog(this, "La fecha de inicio no sigue el formato dd/MM/yyyy", "Fecha incorrecta", JOptionPane.WARNING_MESSAGE);
+                if (refreshCallback != null) {
+                    refreshCallback.run();  // Ejecutamos el método de refresco
+                }
+
+                // Mostrar mensaje de éxito
+                JOptionPane.showMessageDialog(this, "Conferencia editada con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+                this.dispose();
+
+            } catch (IllegalArgumentException e) {
+                JOptionPane.showMessageDialog(this, "Error en las fechas ingresadas: " + e.getMessage(), "Fecha incorrecta", JOptionPane.WARNING_MESSAGE);
                 e.printStackTrace();
             }
 
@@ -474,20 +482,21 @@ public class VUpdateConference extends javax.swing.JFrame {
             e.printStackTrace();
         }
 
+
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void fillFields() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         jTextFieldName.setText(conference.getName());
-        jTextFieldStartDate.setText(formatter.format(conference.getStartDate())); 
-        jTextFieldFinishDate.setText(formatter.format(conference.getFinishDate())); 
+        jTextFieldStartDate.setText(formatter.format(conference.getStartDate()));
+        jTextFieldFinishDate.setText(formatter.format(conference.getFinishDate()));
         jTextFieldPlace.setText(conference.getPlace());
         jTextFieldTheme.setText(conference.getTopic());
         jTextFieldDescription.setText(conference.getDescription());
     }
-    
+
     private void jTextFieldNameMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldNameMousePressed
-       Utilities.resetFieldOnPress(jTextFieldName, "Nombre de la conferencia", Color.gray, Color.black);
+        Utilities.resetFieldOnPress(jTextFieldName, "Nombre de la conferencia", Color.gray, Color.black);
     }//GEN-LAST:event_jTextFieldNameMousePressed
 
     private void jTextFieldNameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldNameFocusLost

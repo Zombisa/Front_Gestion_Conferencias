@@ -1,13 +1,12 @@
 
 package models;
 
-import java.util.Date;
 
 public class Conference {
     
     private String name;
-    private Date startDate;
-    private Date finishDate;
+    private BasicDate startDate;
+    private BasicDate finishDate;
     private String place;
     private String topic;
     private int idConference;
@@ -25,7 +24,7 @@ public class Conference {
      * @param idConference id of the conference
      *
      */
-    public Conference(String name, String description, Date startDate,  Date finishDate, String place, String topic, int idConference, int idOrganizer) {
+    public Conference(String name, String description, BasicDate startDate,  BasicDate finishDate, String place, String topic, int idConference, int idOrganizer) {
         this.name = name;
         this.startDate = startDate;
         this.finishDate = finishDate;
@@ -56,16 +55,16 @@ public class Conference {
     public void setName(String name) {
         this.name = name;
     }
-    public Date getStartDate() {
+    public BasicDate getStartDate() {
         return startDate;
     }
-    public void setStartDate(Date startDate) {
+    public void setStartDate(BasicDate startDate) {
         this.startDate = startDate;
     }
-    public Date getFinishDate() {
+    public BasicDate getFinishDate() {
         return finishDate;
     }
-    public void setFinishDate(Date finishDate) {
+    public void setFinishDate(BasicDate finishDate) {
         this.finishDate = finishDate;
     }
     public String getPlace() {

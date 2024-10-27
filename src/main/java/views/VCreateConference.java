@@ -4,13 +4,13 @@
  */
 package views;
 
-import models.Conference;
 import services.ServiceConference;
 import java.awt.Color;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import models.BasicDate;
 import models.Conference;
 import utilities.Utilities;
 
@@ -429,40 +429,45 @@ public class VCreateConference extends javax.swing.JFrame {
                 return;
             }
 
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-            Date startDateFormatted, finishDateFormatted;
+            String[] startDateParts = startDate.split("/");
+            String[] finishDateParts = finishDate.split("/");
 
             try {
-                // Formatear la fecha de inicio
-                startDateFormatted = formatter.parse(startDate);
+                // Crear los objetos BasicDate
+                BasicDate startBasicDate = new BasicDate(
+                        Integer.parseInt(startDateParts[0]), // día
+                        Integer.parseInt(startDateParts[1]), // mes
+                        Integer.parseInt(startDateParts[2]) // año
+                );
 
-                try {
-                    // Formatear la fecha de fin
-                    finishDateFormatted = formatter.parse(finishDate);
+                BasicDate finishBasicDate = new BasicDate(
+                        Integer.parseInt(finishDateParts[0]),
+                        Integer.parseInt(finishDateParts[1]),
+                        Integer.parseInt(finishDateParts[2])
+                );
 
-                    // Crear un nuevo objeto Conference con las fechas formateadas
-                    Conference newConference = new Conference(name,description,startDateFormatted ,finishDateFormatted, place, theme, (serviceConferences.listConferences().size()+1), idOrganizer);
+                // Crear un nuevo objeto Conference con las fechas formateadas
+                Conference newConference = new Conference(
+                        name, description, startBasicDate, finishBasicDate, place, theme,
+                        (serviceConferences.listConferences().size() + 1), idOrganizer
+                );
 
-                    // Registrar la conferencia
-                    if(serviceConferences.addConference(newConference)==null)
-                        throw new Exception("No se pudo agregar, compruebe el formato");
-
-                    // Mostrar mensaje de éxito
-                    JOptionPane.showMessageDialog(this, "Conferencia registrada con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                    
-                    if (refreshCallback != null) {
-                        refreshCallback.run();  // Ejecutamos el método de refresco
-                    }
-                    
-                    this.dispose();
-
-                } catch (ParseException e) {
-                    JOptionPane.showMessageDialog(this, "La fecha de fin no sigue el formato dd/MM/yyyy", "Fecha incorrecta", JOptionPane.WARNING_MESSAGE);
-                    e.printStackTrace();
+                // Registrar la conferencia
+                if (serviceConferences.addConference(newConference) == null) {
+                    throw new Exception("No se pudo agregar, compruebe el formato");
                 }
 
-            } catch (ParseException e) {
-                JOptionPane.showMessageDialog(this, "La fecha de inicio no sigue el formato dd/MM/yyyy", "Fecha incorrecta", JOptionPane.WARNING_MESSAGE);
+                // Mostrar mensaje de éxito
+                JOptionPane.showMessageDialog(this, "Conferencia registrada con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+                if (refreshCallback != null) {
+                    refreshCallback.run();  // Ejecutamos el método de refresco
+                }
+
+                this.dispose();
+
+            } catch (IllegalArgumentException e) {
+                JOptionPane.showMessageDialog(this, "Error en las fechas ingresadas: " + e.getMessage(), "Fecha incorrecta", JOptionPane.WARNING_MESSAGE);
                 e.printStackTrace();
             }
 
@@ -470,6 +475,7 @@ public class VCreateConference extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Ocurrió un error al registrar la conferencia", "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
+
 
     }//GEN-LAST:event_jButtonRegisterActionPerformed
 
@@ -532,45 +538,6 @@ public class VCreateConference extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jLabelConferencesMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VCreateConference.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VCreateConference.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VCreateConference.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VCreateConference.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        ServiceConference serviceConferences = new ServiceConference();
-        int idOrganizer = 1;
-        Runnable refreshCallback = null;
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VCreateConference(serviceConferences, idOrganizer, refreshCallback).setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonRegister;

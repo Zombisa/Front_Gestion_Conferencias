@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 import models.Conference;
 import models.Article;
+import models.BasicDate;
 import utilities.Utilities;
 
 /*
@@ -461,44 +462,50 @@ public class VPapers extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldKeyWordsFocusLost
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
         try {
             // Obtener datos de los campos de texto
             String name = jTextFieldName.getText();
-            String Autors = jTextFieldAutors.getText();
-            String KeyWords = jTextFieldKeyWords.getText();
-            String DateWrite = jTextFieldDate.getText();
-            String Resumen = jTextFieldResumen.getText();
-            String Archive = jTextFieldUpArchive.getText();
+            String authors = jTextFieldAutors.getText();
+            String keyWords = jTextFieldKeyWords.getText();
+            String dateWrite = jTextFieldDate.getText();
+            String resumen = jTextFieldResumen.getText();
+            String archive = jTextFieldUpArchive.getText();
 
             // Validar los datos
-            if (name.isEmpty() || Autors.isEmpty() || KeyWords.isEmpty()  || Resumen.isEmpty() || Archive.isEmpty()) {
+            if (name.isEmpty() || authors.isEmpty() || keyWords.isEmpty() || resumen.isEmpty() || archive.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-            Date Date;
+            String[] dateParts = dateWrite.split("/");
 
             try {
-                // Formatear la fecha de publicacion
-                Date = formatter.parse(DateWrite);
-                // Crear un nuevo objeto Article con las fechas formateada
-                  Article newArticle= new Article(name,idAuthor,idConference,KeyWords,Date);
-                   // Registrar la conferencia
-                    serviceArticle.addArticleToConference(idConference, newArticle);
-                    // Mostrar mensaje de éxito
-                    JOptionPane.showMessageDialog(this, "Articulo enviado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                // Crear el objeto BasicDate
+                BasicDate date = new BasicDate(
+                        Integer.parseInt(dateParts[0]), // día
+                        Integer.parseInt(dateParts[1]), // mes
+                        Integer.parseInt(dateParts[2]) // año
+                );
 
-            } catch (ParseException e) {
-                JOptionPane.showMessageDialog(this, "La fecha de publicacion no sigue el formato dd/MM/yyyy", "Fecha incorrecta", JOptionPane.WARNING_MESSAGE);
+                // Crear un nuevo objeto Article con la fecha formateada
+                Article newArticle = new Article(name, idAuthor, idConference, keyWords, date);
+
+                // Registrar el artículo
+                serviceArticle.addArticleToConference(idConference, newArticle);
+
+                // Mostrar mensaje de éxito
+                JOptionPane.showMessageDialog(this, "Artículo enviado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+            } catch (IllegalArgumentException e) {
+                JOptionPane.showMessageDialog(this, "La fecha de publicación no sigue el formato dd/MM/yyyy o contiene valores inválidos", "Fecha incorrecta", JOptionPane.WARNING_MESSAGE);
                 e.printStackTrace();
             }
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Ocurrió un error al registrar el articulo", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al registrar el artículo", "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
    
