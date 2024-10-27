@@ -107,7 +107,21 @@ public class ServiceUser {
             throw new RuntimeException("Failed to login user: " + response.getStatus());
         }
     }
-    
+    //POST user
+     public User addConference(User objUserRegistar) {
+        WebTarget target = client.target(this.endPoint);
+        Entity<User> data = Entity.entity(objUserRegistar, MediaType.APPLICATION_JSON_TYPE);
+        Response response = target.request(MediaType.APPLICATION_JSON_TYPE)
+                .post(data);
+
+        // Extrae el body si la respuesta fue exitosa
+        if (response.getStatus() == 200) {
+            return response.readEntity(User.class); // Lee el cuerpo como Conference
+        } else {
+            // Maneja los errores en caso de una respuesta no satisfactoria
+            throw new RuntimeException("Failed to create user: " + response.getStatus());
+        }
+    }
     public String getUserRole(User user) {
         if (user != null) {
             return user.getRol(); // Retorna el rol del usuario
