@@ -77,6 +77,7 @@ public class ServiceUser {
         // Verifica si las credenciales coinciden con el usuario quemado
         if (email.equals(hardcodedEmail) && password.equals(hardcodedPassword)) {
             User hardcodedUser = new User();
+            hardcodedUser.setId(1);
             hardcodedUser.setEmail(hardcodedEmail);
             hardcodedUser.setPassword(hardcodedPassword);
             hardcodedUser.setName("Usuario Quemado"); // Nombre o datos adicionales del usuario quemado
