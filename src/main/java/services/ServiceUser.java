@@ -67,7 +67,6 @@ public class ServiceUser {
             return false;
         }
     }
-
     // POST /api/users/login
     public User loginUser(String email, String password) {
         // Usuario quemado para pruebas
@@ -87,7 +86,7 @@ public class ServiceUser {
             hardcodedUser.setPhone(300);
             return hardcodedUser;
         }
-        
+
         User user = new User(); // Crea un nuevo objeto User
         user.setEmail(email); // Establece el email
         user.setPassword(password); // Establece la contraseña
@@ -108,7 +107,7 @@ public class ServiceUser {
         }
     }
     //POST user
-     public User addConference(User objUserRegistar) {
+     public User addUser(User objUserRegistar) {
         WebTarget target = client.target(this.endPoint);
         Entity<User> data = Entity.entity(objUserRegistar, MediaType.APPLICATION_JSON_TYPE);
         Response response = target.request(MediaType.APPLICATION_JSON_TYPE)

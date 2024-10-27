@@ -1,6 +1,8 @@
 package views;
 
 import java.awt.Color;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import models.User;
 
@@ -479,7 +481,9 @@ public class VCreateUser extends javax.swing.JFrame {
 
         } catch (RuntimeException e) {
             // Manejo de errores en caso de login fallido
-            JOptionPane.showMessageDialog(this, "Login fallido: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Registro fallido: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            Logger.getLogger(VCreateUser.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButtonRegisterActionPerformed
 
@@ -494,7 +498,7 @@ public class VCreateUser extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonRegisterMouseEntered
 
     private void jButtonRegisterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonRegisterMouseClicked
-        javax.swing.JOptionPane.showMessageDialog(this, "Intento de login con los datos:\n Usuario: " + jTextFieldName.getText() + "\nContraseña: " + String.valueOf(jPasswordField2.getPassword()), "LOGIN", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        javax.swing.JOptionPane.showMessageDialog(this, "Intento de registro con los datos:\n Usuario: " + jTextFieldName.getText() + "\nContraseña: " + String.valueOf(jPasswordField.getPassword()), "LOGIN", javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jButtonRegisterMouseClicked
 
     private void jTextFieldNameMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldNameMousePressed
@@ -502,9 +506,9 @@ public class VCreateUser extends javax.swing.JFrame {
             jTextFieldName.setText("");
             jTextFieldName.setForeground(Color.black);
         }
-        if(String.valueOf(jPasswordField2.getPassword()).isEmpty()){
-            jPasswordField2.setText("**********");
-            jPasswordField2.setForeground(Color.gray);
+        if(String.valueOf(jPasswordField.getPassword()).isEmpty()){
+            jPasswordField.setText("**********");
+            jPasswordField.setForeground(Color.gray);
         }
     }//GEN-LAST:event_jTextFieldNameMousePressed
 
