@@ -2,6 +2,8 @@ package views;
 
 import java.awt.Color;
 import models.User;
+import serviceFactory.ServiceFactory;
+import services.ServiceArticle;
 import services.ServiceConference;
 import services.ServiceUser;
 import utilities.Utilities;
@@ -19,13 +21,18 @@ public class VProfile extends javax.swing.JFrame {
     User user;
     ServiceUser serviceUser;
     ServiceConference serviceConference;
+    ServiceArticle serviceArticle;
+    Runnable refreshCallback;
     /**
      * Creates new form VLogin
      */
     public VProfile(User user, ServiceUser serviceUser) {
         initComponents();
+        ServiceFactory serviceFactory = ServiceFactory.getInstance();
         this.user = user;
-        this.serviceUser = serviceUser;
+        this.serviceArticle = serviceFactory.getServiceArticle();
+        this.serviceConference = serviceFactory.getServiceConference();
+        this.serviceUser = serviceFactory.getServiceUser();
         displayUserInfo();
     }
 
@@ -172,6 +179,11 @@ public class VProfile extends javax.swing.JFrame {
         jLabelConferences.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
         jLabelConferences.setText("Conferencias");
         jLabelConferences.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabelConferences.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelConferencesMouseClicked(evt);
+            }
+        });
         jPanelHeader.add(jLabelConferences, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, -1, 60));
 
         jComboBoxProfile.setBackground(new java.awt.Color(1, 143, 166));
@@ -340,6 +352,22 @@ public class VProfile extends javax.swing.JFrame {
                 profileOrganizer.setVisible(true);
             }
     }//GEN-LAST:event_jComboBoxProfileActionPerformed
+
+    private void jLabelConferencesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelConferencesMouseClicked
+        int idAuthor =  user.getId();
+
+        // Crear una Runnable para la callback de refresco (puedes personalizarlo según tus necesidades)
+        Runnable refreshCallback = () -> {
+            // Aquí puedes definir lo que quieres que haga al refrescar
+            System.out.println("Refrescar la lista de conferencias");
+        };
+
+        // Crear la instancia de VConferences
+        VConferences vConferences = new VConferences(serviceConference, serviceArticle, idAuthor, refreshCallback);
+
+        // Mostrar la vista de VConferences
+        vConferences.setVisible(true);
+    }//GEN-LAST:event_jLabelConferencesMouseClicked
 
     private boolean isUserOrganizer(User user) {
         String role = serviceUser.getUserRole(user);

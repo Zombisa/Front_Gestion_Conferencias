@@ -1,5 +1,7 @@
 
 import serviceFactory.ServiceFactory;
+import services.ServiceArticle;
+import services.ServiceConference;
 import services.ServiceUser;
 import views.VLogin;
 
@@ -20,6 +22,9 @@ public class Main {
     public static void main(String[] args) {
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         ServiceUser serviceUser = serviceFactory.getServiceUser();
+        ServiceConference serviceConference = serviceFactory.getServiceConference();
+        ServiceArticle serviceArticle = serviceFactory.getServiceArticle();
+        
         VLogin VtnLogin = new VLogin(serviceUser);
         VtnLogin.setVisible(true);
     }

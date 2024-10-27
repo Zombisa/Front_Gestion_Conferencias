@@ -27,7 +27,7 @@ import services.ServiceConference;
  */
 public class VConferences extends javax.swing.JFrame{
     private ServiceConference service;
-     private ServiceArticle serviceArticle;
+    private ServiceArticle serviceArticle;
     private List<Conference> conferenceList;
     private Runnable refreshCallback; 
     private int idAuthor;

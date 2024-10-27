@@ -70,6 +70,23 @@ public class ServiceUser {
 
     // POST /api/users/login
     public User loginUser(String email, String password) {
+        // Usuario quemado para pruebas
+        String hardcodedEmail = "abc";
+        String hardcodedPassword = "1234";
+
+        // Verifica si las credenciales coinciden con el usuario quemado
+        if (email.equals(hardcodedEmail) && password.equals(hardcodedPassword)) {
+            User hardcodedUser = new User();
+            hardcodedUser.setEmail(hardcodedEmail);
+            hardcodedUser.setPassword(hardcodedPassword);
+            hardcodedUser.setName("Usuario Quemado"); // Nombre o datos adicionales del usuario quemado
+            hardcodedUser.setName("Usuario de Prueba"); // Nombre del usuario quemado
+            hardcodedUser.setRol("Autor"); // Rol quemado (puede ser Autor u Organizador)
+            hardcodedUser.setAddress("Direccion");
+            hardcodedUser.setPhone(300);
+            return hardcodedUser;
+        }
+        
         User user = new User(); // Crea un nuevo objeto User
         user.setEmail(email); // Establece el email
         user.setPassword(password); // Establece la contraseña
