@@ -458,7 +458,7 @@ public class VCreateConference extends javax.swing.JFrame {
                 // Registrar la conferencia
                 User user = serviceUser.getUser(idOrganizer);
                 OrganizerDTO organizerDTO = new OrganizerDTO(user.getId(), user.getName(), user.getEmail());
-                if (serviceConferences.addConference(MapperConference.conferenceToDTO(newConference, organizerDTO)) == null) {
+                if (serviceConferences.addConference(newConference) == null) {
                     throw new Exception("No se pudo agregar, compruebe el formato");
                 }
 

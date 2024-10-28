@@ -76,14 +76,14 @@ public class ServiceConference {
 
     
     //POST conference
-    public ConferenceDTO addConference(ConferenceDTO objConferenceRegistar) {
+    public ConferenceDTO addConference(Conference objConferenceRegistar) {
         WebTarget target = conference.target(this.endPoint);
-        Entity<ConferenceDTO> data = Entity.entity(objConferenceRegistar, MediaType.APPLICATION_JSON_TYPE);
+        Entity<Conference> data = Entity.entity(objConferenceRegistar, MediaType.APPLICATION_JSON_TYPE);
         Response response = target.request(MediaType.APPLICATION_JSON_TYPE)
                 .post(data);
 
         // Extrae el body si la respuesta fue exitosa
-        if (response.getStatus() == 200) {
+        if (response.getStatus() == 201) {
             return response.readEntity(ConferenceDTO.class); // Lee el cuerpo como Conference
         } else {
             // Maneja los errores en caso de una respuesta no satisfactoria

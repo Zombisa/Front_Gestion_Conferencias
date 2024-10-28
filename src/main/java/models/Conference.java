@@ -9,9 +9,8 @@ public class Conference {
     private BasicDate finishDate;
     private String place;
     private String topic;
-    private String idConference;
+    private String id;
     private String idOrganizer;
-    private  boolean isOpen ;
     private String description;
 
 
@@ -31,9 +30,8 @@ public class Conference {
         this.finishDate = finishDate;
         this.place = place;
         this.topic = topic;
-        this.idConference = idConference;
+        this.id = idConference;
         this.idOrganizer = idOrganizer;
-        this.isOpen = true;
         this.description = description;
     }
     public Conference(){}
@@ -82,20 +80,16 @@ public class Conference {
         this.topic = topic;
     }
     public String getIdConference() {
-        return idConference;
+        return id;
     }
     public void setIdConference(String idConference) {
-        this.idConference = idConference;
+        this.id = idConference;
     }
-    public boolean isOpen(){return this.isOpen;}
     public String getIdOrganizer() {
         return idOrganizer;
     }
     public void setIdOrganizer(String idOrganizer) {
         this.idOrganizer = idOrganizer;
-    }
-    public boolean setOpen(boolean open) {
-        return this.isOpen = open;
     }
     public String getDescription() {
         return description;

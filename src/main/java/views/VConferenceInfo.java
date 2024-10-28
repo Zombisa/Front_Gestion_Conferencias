@@ -47,7 +47,7 @@ public class VConferenceInfo extends javax.swing.JFrame {
        jLabelShownTopic.setText(conference.getTopic());
     }
     public void mostrarBoton(Conference conference){
-     if(conference.isOpen()==false){
+     if(true==false){
         jButtonNoOpen.setVisible(false);
         jButtonIsOpen.setVisible(true);
      }
