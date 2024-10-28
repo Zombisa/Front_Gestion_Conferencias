@@ -29,3 +29,4 @@ Se adjunta el link del documento donde se encuentra el informe del thinking alou
 ## Video explicación del proyecto 
 Se adjunta el link del video explicaion del proyecto gestión de conferencias
 
+[Video explicativo](https://drive.google.com/file/d/1t2lgZ3Yd0mEly3BMlZt4brsViBGuXMn3/view "Video explicativo")
