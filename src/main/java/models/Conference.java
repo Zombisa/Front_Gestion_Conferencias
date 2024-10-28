@@ -37,6 +37,7 @@ public class Conference {
         this.description = description;
     }
     public Conference(){}
+
     public Conference copy(){
         return new  Conference(
                 this.getName(),

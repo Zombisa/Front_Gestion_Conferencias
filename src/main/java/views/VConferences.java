@@ -1,14 +1,15 @@
 package views;
 
+import mapper.MapperConference;
 import models.Conference;
+import models.ConferenceDTO;
 import models.ListConferencesDTO;
 import utilities.Utilities;
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
@@ -341,7 +342,12 @@ public class VConferences extends javax.swing.JFrame{
     }//GEN-LAST:event_jButtonRefreshMouseClicked
 
     public void loadConferences(ListConferencesDTO conferencesDTO) {
-        List<Conference> conferences = conferencesDTO.getConferences();
+        List<ConferenceDTO> conferencesDTOList = conferencesDTO.getConferences();
+        List<Conference> conferences = new ArrayList<>();
+        for (ConferenceDTO conferencesdto: conferencesDTOList){
+            conferences.add(MapperConference.DTOToConference(conferencesdto));
+        }
+
         if (conferences.isEmpty()) {
             jPanelNoConferences.setVisible(true);
             jScrollPaneConferences.setVisible(false);
@@ -361,10 +367,9 @@ public class VConferences extends javax.swing.JFrame{
             model.addColumn("Fecha de Inicio");
             model.addColumn("");  // Columna vacía para el botón
             
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
             for (Conference conf : conferences) {
-                model.addRow(new Object[]{conf.getName(), formatter.format(conf.getStartDate()), "Ver más..."});
+                model.addRow(new Object[]{conf.getName(), conf.getStartDate().toString(), "Ver más..."});
             }
 
             jTableConferences.setModel(model);

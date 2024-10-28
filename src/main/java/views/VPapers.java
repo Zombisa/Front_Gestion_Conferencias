@@ -5,9 +5,6 @@ import services.ServiceArticle;
 import services.ServiceConference;
 
 import java.awt.Color;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.swing.JOptionPane;
 import models.Conference;
 import models.Article;

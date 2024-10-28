@@ -3,23 +3,24 @@ package models;
 import java.util.List;
 
 public class ListConferencesDTO {
-    private int totalConferences;
-    private List<Conference> conferences;
+    private int totalConference;
+    private List<ConferenceDTO> conferences;
 
     public ListConferencesDTO() {}
-    public ListConferencesDTO(int totalConferences, List<Conference> conferences) {
-
+    public ListConferencesDTO(int totalConferences, List<ConferenceDTO> conferences) {
+        this.conferences = conferences;
+        totalConference = totalConferences;
     }
 
 
-    public int getTotalConferences() {
-        return totalConferences;
+    public int getTotalConference() {
+        return totalConference;
     }
-    public void setTotalConferences(int totalConferences) {this.totalConferences = totalConferences;}
-    public List<Conference> getConferences() {
+    public void setTotalConference(int totalConference) {this.totalConference = totalConference;}
+    public List<ConferenceDTO> getConferences() {
         return conferences;
     }
-    public void setConferences(List<Conference> conferences) {
+    public void setConferences(List<ConferenceDTO> conferences) {
         this.conferences = conferences;
     }
 

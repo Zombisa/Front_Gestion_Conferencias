@@ -5,14 +5,12 @@
 package views;
 
 import java.awt.Color;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import javax.swing.JOptionPane;
+import mapper.MapperConference;
 import models.BasicDate;
 import models.Conference;
 import services.ServiceConference;
+import services.ServiceUser;
 import utilities.Utilities;
 
 /**
@@ -26,16 +24,18 @@ public class VUpdateConference extends javax.swing.JFrame {
     private VProfileOrganizer profileOrganizer;
     private String idOrganizer;
     private Runnable refreshCallback;
+    private ServiceUser serviceUser;
 
     /**
      * Creates new form VProfileOrganizer
      */
-    public VUpdateConference(ServiceConference serviceConferences, String idOrganizer, Conference conference, Runnable refreshCallback) {
+    public VUpdateConference(ServiceConference serviceConferences, String idOrganizer, Conference conference, Runnable refreshCallback, ServiceUser serviceUser) {
         initComponents();
         this.serviceConferences = serviceConferences;
         this.idOrganizer = idOrganizer;
         this.conference = conference;
         this.refreshCallback = refreshCallback;
+        this.serviceUser = serviceUser;
         fillFields();
     }
 
@@ -459,7 +459,7 @@ public class VUpdateConference extends javax.swing.JFrame {
                 );
 
                 // Editar la conferencia
-                if (serviceConferences.updateConference(newConference, conference.getIdConference()) == null) {
+                if (serviceConferences.updateConference(MapperConference.conferenceToDTO(newConference, null), conference.getIdConference()) == null) {
                     throw new Exception("No se pudo actualizar");
                 }
 
@@ -544,7 +544,7 @@ public class VUpdateConference extends javax.swing.JFrame {
 
     private void jLabelConferencesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelConferencesMouseClicked
         if (profileOrganizer == null || !profileOrganizer.isDisplayable()) {
-            profileOrganizer = new VProfileOrganizer(serviceConferences, idOrganizer);
+            profileOrganizer = new VProfileOrganizer(serviceConferences, idOrganizer, serviceUser);
 
             profileOrganizer.setVisible(true);
         } else {

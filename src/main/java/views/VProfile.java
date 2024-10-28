@@ -351,7 +351,7 @@ public class VProfile extends javax.swing.JFrame {
         boolean segundaCondicion = "organizer".equals(selectedItem); 
         if (primerCondicion&& segundaCondicion ) {
                 String idOrganizer = user.getId();
-                VProfileOrganizer profileOrganizer = new VProfileOrganizer(serviceConference, idOrganizer);
+                VProfileOrganizer profileOrganizer = new VProfileOrganizer(serviceConference, idOrganizer, serviceUser );
                 profileOrganizer.setVisible(true);
             }
     }//GEN-LAST:event_jComboBoxProfileActionPerformed

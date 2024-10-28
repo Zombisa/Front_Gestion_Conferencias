@@ -13,12 +13,12 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
-
 import mapper.MapperConference;
 import models.Conference;
 import models.ConferenceDTO;
 import models.ListConferencesOrganizerDTO;
 import services.ServiceConference;
+import services.ServiceUser;
 import utilities.Utilities;
 /**
  *
@@ -27,14 +27,16 @@ import utilities.Utilities;
 public class VProfileOrganizer extends javax.swing.JFrame{
     private String idOrganizer;
     private ServiceConference serviceConferences;
+    private ServiceUser serviceUser;
 
     /**
      * Creates new form JProfileOrganizer
      */
-    public VProfileOrganizer(ServiceConference service, String idOrganizer) {
+    public VProfileOrganizer(ServiceConference service, String idOrganizer, ServiceUser serviceUser) {
         initComponents();
         this.serviceConferences = service;
         this.idOrganizer = idOrganizer;
+        this.serviceUser= serviceUser;
         ListConferencesOrganizerDTO conferencesByOrganizer = service.listConferencesByOrganizer(this.idOrganizer);
         loadConferences(conferencesByOrganizer);
     }
@@ -470,7 +472,7 @@ public class VProfileOrganizer extends javax.swing.JFrame{
     }//GEN-LAST:event_jPanelHeaderMousePressed
 
     private void jButtonRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegisterActionPerformed
-        VCreateConference createConferenceWindow = new VCreateConference(serviceConferences, idOrganizer, this::refreshConferencesById);
+        VCreateConference createConferenceWindow = new VCreateConference(serviceConferences, idOrganizer, this::refreshConferencesById, serviceUser);
         createConferenceWindow.setVisible(true);
     }//GEN-LAST:event_jButtonRegisterActionPerformed
 
@@ -549,7 +551,7 @@ public class VProfileOrganizer extends javax.swing.JFrame{
                 Conference selectedConference = conferences.get(jTableConferences.getSelectedRow());
 
                 if (action.equals("editar")) {
-                    VUpdateConference updateWindow = new VUpdateConference(serviceConferences, idOrganizer, selectedConference, refreshCallback);
+                    VUpdateConference updateWindow = new VUpdateConference(serviceConferences, idOrganizer, selectedConference, refreshCallback, serviceUser);
                     updateWindow.setVisible(true);  // Mostrar la ventana para editar
                 } else if (action.equals("borrar")) {
                     service.deleteConference(selectedConference.getIdConference());
@@ -559,7 +561,7 @@ public class VProfileOrganizer extends javax.swing.JFrame{
                 } else if (action.equals("ver")) {
                     // Lógica para ver más detalles
                     String idConference = selectedConference.getIdConference();
-                   // VConferenceInfo infoWindow = new VConferenceInfo(service, idConference);
+                    //VConferenceInfo infoWindow = new VConferenceInfo(service, idConference);
                     //infoWindow.setVisible(true);  // Mostrar la ventana con la información de la conferencia
                 }
             }

@@ -75,9 +75,9 @@ public class ServiceConference {
 
     
     //POST conference
-    public ConferenceDTO addConference(Conference objConferenceRegistar) {
+    public ConferenceDTO addConference(ConferenceDTO objConferenceRegistar) {
         WebTarget target = conference.target(this.endPoint);
-        Entity<Conference> data = Entity.entity(objConferenceRegistar, MediaType.APPLICATION_JSON_TYPE);
+        Entity<ConferenceDTO> data = Entity.entity(objConferenceRegistar, MediaType.APPLICATION_JSON_TYPE);
         Response response = target.request(MediaType.APPLICATION_JSON_TYPE)
                 .post(data);
 
@@ -91,17 +91,17 @@ public class ServiceConference {
     }
 
     //PUT conference/id
-    public Conference updateConference(Conference objConferenceActualizar, String id) {
-        WebTarget target = conference.target(this.endPoint + "/" + id);
-        Entity<Conference> data = Entity.entity(objConferenceActualizar, MediaType.APPLICATION_JSON_TYPE);
+    public ConferenceDTO updateConference(ConferenceDTO objConferenceActualizar, String id) {
+            WebTarget target = conference.target(this.endPoint + "/" + id);
+            Entity<ConferenceDTO> data = Entity.entity(objConferenceActualizar, MediaType.APPLICATION_JSON_TYPE);
 
-        Response response = target.request(MediaType.APPLICATION_JSON_TYPE).put(data);
+            Response response = target.request(MediaType.APPLICATION_JSON_TYPE).put(data);
 
-        if (response.getStatus() == 200) {
-            return response.readEntity(Conference.class); // Lee el objeto actualizado
-        } else {
-            throw new RuntimeException("Failed to update conference: " + response.getStatus());
-        }
+            if (response.getStatus() == 200) {
+                return response.readEntity(ConferenceDTO.class); // Lee el objeto actualizado
+            } else {
+                throw new RuntimeException("Failed to update conference: " + response.getStatus());
+            }
     }
     
     //DeleteMapping

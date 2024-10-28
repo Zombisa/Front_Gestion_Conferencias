@@ -4,14 +4,15 @@
  */
 package views;
 
+import mapper.MapperConference;
+import models.OrganizerDTO;
+import models.User;
 import services.ServiceConference;
 import java.awt.Color;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.swing.JOptionPane;
 import models.BasicDate;
 import models.Conference;
+import services.ServiceUser;
 import utilities.Utilities;
 
 /**
@@ -22,16 +23,18 @@ public class VCreateConference extends javax.swing.JFrame {
     private ServiceConference serviceConferences;
     private VProfileOrganizer profileOrganizer;
     private String idOrganizer;
-    private Runnable refreshCallback;  // Función para notificar a la ventana principal
+    private Runnable refreshCallback;
+    private ServiceUser serviceUser;// Función para notificar a la ventana principal
     
     /**
      * Creates new form VProfileOrganizer
      */
-    public VCreateConference(ServiceConference serviceConferences, String idOrganizer, Runnable refreshCallback) {
+    public VCreateConference(ServiceConference serviceConferences, String idOrganizer, Runnable refreshCallback, ServiceUser serviceUser) {
         initComponents();
         this.serviceConferences = serviceConferences;
         this.idOrganizer = idOrganizer;
-        this.refreshCallback = refreshCallback;  
+        this.refreshCallback = refreshCallback;
+        this.serviceUser = serviceUser;
     }
 
     /**
@@ -453,7 +456,9 @@ public class VCreateConference extends javax.swing.JFrame {
                 );
 
                 // Registrar la conferencia
-                if (serviceConferences.addConference(newConference) == null) {
+                User user = serviceUser.getUser(idOrganizer);
+                OrganizerDTO organizerDTO = new OrganizerDTO(user.getId(), user.getName(), user.getEmail());
+                if (serviceConferences.addConference(MapperConference.conferenceToDTO(newConference, organizerDTO)) == null) {
                     throw new Exception("No se pudo agregar, compruebe el formato");
                 }
 
@@ -529,7 +534,7 @@ public class VCreateConference extends javax.swing.JFrame {
 
     private void jLabelConferencesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelConferencesMouseClicked
         if (profileOrganizer == null || !profileOrganizer.isDisplayable()) {
-            profileOrganizer = new VProfileOrganizer(serviceConferences, idOrganizer);
+            profileOrganizer = new VProfileOrganizer(serviceConferences, idOrganizer, serviceUser);
 
             profileOrganizer.setVisible(true);
         } else {
