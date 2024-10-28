@@ -188,7 +188,7 @@ public class VProfile extends javax.swing.JFrame {
 
         jComboBoxProfile.setBackground(new java.awt.Color(1, 143, 166));
         jComboBoxProfile.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
-        jComboBoxProfile.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Autor", "Organizador" }));
+        jComboBoxProfile.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "author", "organizer" }));
         jComboBoxProfile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxProfileActionPerformed(evt);
@@ -346,7 +346,10 @@ public class VProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelMinimizeMouseClicked
 
     private void jComboBoxProfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxProfileActionPerformed
-        if (jComboBoxProfile.isVisible() && "Organizador".equals(jComboBoxProfile.getSelectedItem())) {
+        boolean primerCondicion = jComboBoxProfile.isVisible();
+        Object selectedItem= jComboBoxProfile.getSelectedItem();
+        boolean segundaCondicion = "organizer".equals(selectedItem); 
+        if (primerCondicion&& segundaCondicion ) {
                 String idOrganizer = user.getId();
                 VProfileOrganizer profileOrganizer = new VProfileOrganizer(serviceConference, idOrganizer);
                 profileOrganizer.setVisible(true);
@@ -371,7 +374,7 @@ public class VProfile extends javax.swing.JFrame {
 
     private boolean isUserOrganizer(User user) {
         String role = serviceUser.getUserRole(user);
-        return role.equals("Organizador");
+        return role.equals("organizer");
     }
     
     private void displayUserInfo() {

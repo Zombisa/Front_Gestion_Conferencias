@@ -2,15 +2,15 @@ package models;
 
 public class Article {
     private String name;
-    private final String idAuthor;
-    private final String idConference;
+    private String idAuthor;
+    private String idConference;
     private String keyWords;
     private BasicDate publishDate;
 
     
     /**
      * @param name author name
-     * @param idAuthor author id who upload the article
+     * @param idAuthor author id who upload the articles
      * @param idConference conference id
      */
   
@@ -22,6 +22,10 @@ public class Article {
         this.keyWords = keyWords;
         this.publishDate = publishDate;
     }
+
+    public Article(){}
+
+
     public Article copy(){
         return new Article(
                 this.getName(),

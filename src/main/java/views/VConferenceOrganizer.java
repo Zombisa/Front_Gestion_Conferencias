@@ -1,6 +1,8 @@
 package views;
 
+import mapper.MapperConference;
 import models.Article;
+import models.ListArticleConferencesDTO;
 import models.User;
 import models.Conference;
 import services.*;
@@ -37,13 +39,14 @@ public class VConferenceOrganizer extends javax.swing.JFrame {
         this.serviceArticle=serviceArticle;
         this.serviceConference=serviceConference;
         this.idConference=idConference;
-        Conference conference=serviceConference.getConference(idConference);
+        Conference conference= MapperConference.DTOToConference(serviceConference.getConference(idConference));
         jLabelShownName.setText(conference.getName());
-        List<Article> articles = serviceArticle.listArticlesByConference(idConference);
+        ListArticleConferencesDTO articles = serviceArticle.listArticlesByConference(idConference);
         listPapers(articles);
     }   
     
-    public void listPapers(List<Article> Articles) {
+    public void listPapers(ListArticleConferencesDTO ArticlesDTO) {
+        List<Article> Articles = ArticlesDTO.getArticles();
         if (Articles.isEmpty()) {
             jTableNoArticles.setVisible(true);
             jTableArticles.setVisible(false);
@@ -368,7 +371,7 @@ public class VConferenceOrganizer extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelMinimizeMouseClicked
     
     public void refreshArticlesById() {
-        List<Article> articles = serviceArticle.listArticlesByConference(idConference);
+        ListArticleConferencesDTO articles = serviceArticle.listArticlesByConference(idConference);
         listPapers(articles);
     }
 

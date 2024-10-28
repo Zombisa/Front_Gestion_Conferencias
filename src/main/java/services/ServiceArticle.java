@@ -13,6 +13,8 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import models.Article;
+import models.ListArticleAuthorDTO;
+import models.ListArticleConferencesDTO;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
 /**
@@ -24,7 +26,7 @@ public class ServiceArticle {
     private Client client;
 
     public ServiceArticle() {
-        this.endPoint = "http://localhost:8080/api/articles";
+        this.endPoint = "http://localhost:8081/api/articles";
         client = ClientBuilder.newClient().register(new JacksonFeature());
     }
 
@@ -44,29 +46,28 @@ public class ServiceArticle {
     }
     
     // GET /api/articles/conferences/{idConference}
-    public List<Article> listArticlesByConference(String idConference) {
+    public ListArticleConferencesDTO listArticlesByConference(String idConference) {
         WebTarget target = client.target(this.endPoint + "/conferences/" + idConference);
         // Realiza la solicitud GET y obtiene la respuesta
         Response response = target.request(MediaType.APPLICATION_JSON_TYPE).get();
 
         // Si el estado es 200 (OK), se extrae el body
         if (response.getStatus() == 200) {
-            return response.readEntity(new GenericType<List<Article>>() {
-            });
+            return response.readEntity(new GenericType<ListArticleConferencesDTO>() {});
         } else {
             throw new RuntimeException("Failed to fetch articles for conference: " + response.getStatus());
         }
     }
 
     // GET /api/articles/author/{idAuthor}
-    public List<Article> listArticlesByAuthor(String idAuthor) {
+    public ListArticleAuthorDTO listArticlesByAuthor(String idAuthor) {
         WebTarget target = client.target(this.endPoint + "/author/" + idAuthor);
         // Realiza la solicitud GET y obtiene la respuesta
         Response response = target.request(MediaType.APPLICATION_JSON_TYPE).get();
 
         // Si el estado es 200 (OK), se extrae el body
         if (response.getStatus() == 200) {
-            return response.readEntity(new GenericType<List<Article>>() {
+            return response.readEntity(new GenericType<ListArticleAuthorDTO>() {
             });
         } else {
             throw new RuntimeException("Failed to fetch articles by author: " + response.getStatus());

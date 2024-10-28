@@ -449,7 +449,7 @@ public class VCreateConference extends javax.swing.JFrame {
                 // Crear un nuevo objeto Conference con las fechas formateadas
                 Conference newConference = new Conference(
                         name, description, startBasicDate, finishBasicDate, place, theme,
-                        String.valueOf((serviceConferences.listConferences().size() + 1)), String.valueOf(idOrganizer)
+                        String.valueOf((serviceConferences.listConferences().getConferences().size() + 1)), String.valueOf(idOrganizer)
                 );
 
                 // Registrar la conferencia

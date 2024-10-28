@@ -13,6 +13,8 @@ public class BasicDate {
     private int day;
     private int month;
     private int year;
+
+
     public BasicDate(int day, int month, int year) {
         if(day > 31)
             throw new IllegalArgumentException("day > 31");
@@ -24,6 +26,8 @@ public class BasicDate {
             throw new IllegalArgumentException("year < 1900");
         this.year = year;
     }
+
+    public BasicDate(){}
 
     public int getDay() {
         return day;
@@ -49,4 +53,7 @@ public class BasicDate {
         this.year = year;
     }
 
+    public String toString(){
+        return day + "/" + month + "/" + year;
+    }
 }

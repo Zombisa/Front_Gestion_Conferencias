@@ -1,4 +1,6 @@
 package views;
+import mapper.MapperConference;
+import models.ConferenceDTO;
 import services.ServiceConference;
 import java.awt.Color;
 
@@ -31,7 +33,7 @@ public class VConferenceInfo extends javax.swing.JFrame {
         this.serviceConferences = service;
         this.serviceArticle=serviceArticle;
         this.idAuthor=idAuthor;
-        this.conference = service.getConference(idConference);
+        this.conference = MapperConference.DTOToConference(service.getConference(idConference));
         this.idConference = idConference;
         mostrarDatos(conference);
         mostrarBoton(conference);

@@ -8,11 +8,16 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+
+import mapper.MapperConference;
 import models.Conference;
+import models.ConferenceDTO;
+import models.ListConferencesOrganizerDTO;
 import services.ServiceConference;
 import utilities.Utilities;
 /**
@@ -30,11 +35,16 @@ public class VProfileOrganizer extends javax.swing.JFrame{
         initComponents();
         this.serviceConferences = service;
         this.idOrganizer = idOrganizer;
-        List<Conference> conferences = service.listConferencesByOrganizer(this.idOrganizer);
-        loadConferences(conferences);
+        ListConferencesOrganizerDTO conferencesByOrganizer = service.listConferencesByOrganizer(this.idOrganizer);
+        loadConferences(conferencesByOrganizer);
     }
 
-    public void loadConferences(List<Conference> conferences) {
+    public void loadConferences(ListConferencesOrganizerDTO conferenceByOrganizer) {
+        List<ConferenceDTO> conferencesDTO =  conferenceByOrganizer.getConferences();
+        List<Conference> conferences = new ArrayList<Conference>();
+        for(ConferenceDTO conference : conferencesDTO) {
+            conferences.add(MapperConference.DTOToConference(conference));
+        }
         if (conferences.isEmpty()) {
             jPanelNoConferences.setVisible(true);
             jScrollPaneConferences.setVisible(false);  // Ocultar el JScrollPane si no hay conferencias
@@ -465,7 +475,7 @@ public class VProfileOrganizer extends javax.swing.JFrame{
     }//GEN-LAST:event_jButtonRegisterActionPerformed
 
     public void refreshConferencesById() {
-        List<Conference> conferences = serviceConferences.listConferencesByOrganizer(idOrganizer);
+        ListConferencesOrganizerDTO conferences = serviceConferences.listConferencesByOrganizer(idOrganizer);
         loadConferences(conferences);
     }
 

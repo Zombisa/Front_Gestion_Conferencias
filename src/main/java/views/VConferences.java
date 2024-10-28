@@ -1,6 +1,7 @@
 package views;
 
 import models.Conference;
+import models.ListConferencesDTO;
 import utilities.Utilities;
 
 import java.awt.Color;
@@ -41,7 +42,7 @@ public class VConferences extends javax.swing.JFrame{
         this.idAuthor=idAuthor;
         this.refreshCallback = refreshCallback;
         initComponents();
-        List<Conference> conferences = service.listConferences();
+        ListConferencesDTO conferences = service.listConferences();
         
         loadConferences(conferences);
     }
@@ -339,7 +340,8 @@ public class VConferences extends javax.swing.JFrame{
         refreshConferences();
     }//GEN-LAST:event_jButtonRefreshMouseClicked
 
-    public void loadConferences(List<Conference> conferences) {
+    public void loadConferences(ListConferencesDTO conferencesDTO) {
+        List<Conference> conferences = conferencesDTO.getConferences();
         if (conferences.isEmpty()) {
             jPanelNoConferences.setVisible(true);
             jScrollPaneConferences.setVisible(false);
@@ -379,7 +381,7 @@ public class VConferences extends javax.swing.JFrame{
     }
 
     private void refreshConferences() {
-        List<Conference> updatedConferences = service.listConferences();
+        ListConferencesDTO updatedConferences = service.listConferences();
         loadConferences(updatedConferences);
     }
 

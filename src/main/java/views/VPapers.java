@@ -1,5 +1,6 @@
 package views;
 
+import mapper.MapperConference;
 import services.ServiceArticle;
 import services.ServiceConference;
 
@@ -37,7 +38,7 @@ public class VPapers extends javax.swing.JFrame {
         this.idAuthor=idAuthor;
         this.idConference=idConference;
         this.serviceArticle = serviceArticle;
-        Conference conference=service.getConference(idConference);
+        Conference conference= MapperConference.DTOToConference(service.getConference(idConference));
         jLabelShownName.setText(conference.getName());
     }
 

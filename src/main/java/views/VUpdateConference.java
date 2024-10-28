@@ -486,10 +486,9 @@ public class VUpdateConference extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void fillFields() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         jTextFieldName.setText(conference.getName());
-        jTextFieldStartDate.setText(formatter.format(conference.getStartDate()));
-        jTextFieldFinishDate.setText(formatter.format(conference.getFinishDate()));
+        jTextFieldStartDate.setText( conference.getStartDate().toString() );
+        jTextFieldFinishDate.setText( conference.getFinishDate().toString() );
         jTextFieldPlace.setText(conference.getPlace());
         jTextFieldTheme.setText(conference.getTopic());
         jTextFieldDescription.setText(conference.getDescription());

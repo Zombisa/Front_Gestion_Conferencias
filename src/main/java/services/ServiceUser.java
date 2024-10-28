@@ -23,7 +23,7 @@ public class ServiceUser {
     private Client client;
 
     public ServiceUser() {
-        this.endPoint = "http://localhost:8081/api/users"; 
+        this.endPoint = "http://localhost:8080/api/users"; 
         client = ClientBuilder.newClient().register(new JacksonFeature());
     }
     

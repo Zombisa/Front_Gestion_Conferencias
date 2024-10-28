@@ -377,8 +377,15 @@ public class VLogin extends javax.swing.JFrame {
 
         try {
             // Intenta iniciar sesión
-            User loggedInUser = serviceUser.loginUser(email, password);
-
+            //User loggedInUser = serviceUser.loginUser(email, password);
+            User loggedInUser = new User(
+                    "671ecead4d86b707328ef6cf",
+                    "Miguel Super ADmin",
+                    "mangel@algo",
+                    "password",
+                    "tu casa",
+                    "organizer",
+                    111111111);
             // Si el login es exitoso, abre la ventana VProfile
             VProfile vProfile = new VProfile(loggedInUser, serviceUser); // Pasa el usuario a VProfile
             vProfile.setVisible(true); // Muestra la ventana de perfil

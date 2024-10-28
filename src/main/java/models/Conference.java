@@ -3,7 +3,7 @@ package models;
 
 
 public class Conference {
-    
+
     private String name;
     private BasicDate startDate;
     private BasicDate finishDate;
@@ -13,6 +13,7 @@ public class Conference {
     private String idOrganizer;
     private  boolean isOpen ;
     private String description;
+
 
     /**
      * 
@@ -35,7 +36,7 @@ public class Conference {
         this.isOpen = true;
         this.description = description;
     }
-
+    public Conference(){}
     public Conference copy(){
         return new  Conference(
                 this.getName(),

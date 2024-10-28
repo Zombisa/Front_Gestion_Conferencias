@@ -14,9 +14,12 @@ import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import models.ConferenceDTO;
+import models.ListConferencesDTO;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
 import models.Conference;
+import models.ListConferencesOrganizerDTO;
 
 /**
  *
@@ -27,28 +30,28 @@ public class ServiceConference {
     private Client conference;
 
     public ServiceConference() {
-        this.endPoint = "http://localhost:8080/api/conference";
+        this.endPoint = "http://localhost:8081/api/conferences";
         conference = ClientBuilder.newClient().register(new JacksonFeature());
     }
 
     //GET conference/id
-    public Conference getConference(String id) {
-        Conference objConference = null;
+    public ConferenceDTO getConference(String id) {
+        ConferenceDTO objConference = null;
 
         WebTarget target = conference.target(this.endPoint + "/" + id);
-        objConference = target.request(MediaType.APPLICATION_JSON_TYPE).get(Conference.class);
+        objConference = target.request(MediaType.APPLICATION_JSON_TYPE).get(ConferenceDTO.class);
         return objConference;
     }
 
     //GET conference
-    public List<Conference> listConferences() {
+    public ListConferencesDTO listConferences() {
         WebTarget target = conference.target(this.endPoint);
         // Realiza la solicitud GET y obtiene la respuesta
         Response response = target.request(MediaType.APPLICATION_JSON_TYPE).get();
 
         // Si el estado es 200 (OK), se extrae el body
         if (response.getStatus() == 200) {
-            return response.readEntity(new GenericType<List<Conference>>() {
+            return response.readEntity(new GenericType<ListConferencesDTO>() {
             }); // Extrae la lista de Conference
         } else {
             throw new RuntimeException("Failed to fetch conferences: " + response.getStatus());
@@ -56,14 +59,14 @@ public class ServiceConference {
     }
 
     //GET conference/organizer/{id}
-    public List<Conference> listConferencesByOrganizer(String organizerId) {
+    public ListConferencesOrganizerDTO listConferencesByOrganizer(String organizerId) {
         WebTarget target = conference.target(this.endPoint + "/organizer/" + organizerId);
         // Realiza la solicitud GET y obtiene la respuesta
         Response response = target.request(MediaType.APPLICATION_JSON_TYPE).get();
 
         // Si el estado es 200 (OK), se extrae el body
         if (response.getStatus() == 200) {
-            return response.readEntity(new GenericType<List<Conference>>() {
+            return response.readEntity(new GenericType<ListConferencesOrganizerDTO>() {
             }); // Extrae la lista de Conference
         } else {
             throw new RuntimeException("Failed to fetch conferences by organizer: " + response.getStatus());
@@ -72,7 +75,7 @@ public class ServiceConference {
 
     
     //POST conference
-    public Conference addConference(Conference objConferenceRegistar) {
+    public ConferenceDTO addConference(Conference objConferenceRegistar) {
         WebTarget target = conference.target(this.endPoint);
         Entity<Conference> data = Entity.entity(objConferenceRegistar, MediaType.APPLICATION_JSON_TYPE);
         Response response = target.request(MediaType.APPLICATION_JSON_TYPE)
@@ -80,7 +83,7 @@ public class ServiceConference {
 
         // Extrae el body si la respuesta fue exitosa
         if (response.getStatus() == 200) {
-            return response.readEntity(Conference.class); // Lee el cuerpo como Conference
+            return response.readEntity(ConferenceDTO.class); // Lee el cuerpo como Conference
         } else {
             // Maneja los errores en caso de una respuesta no satisfactoria
             throw new RuntimeException("Failed to create conference: " + response.getStatus());
@@ -108,7 +111,7 @@ public class ServiceConference {
         // Verificar el código de estado
         if (response.getStatus() == 200) {
             // Si la respuesta es OK (200), intentamos leer el cuerpo como Boolean
-            return response.readEntity(Boolean.class);
+            return true;
         } else {
             System.out.println("Error: " + response.getStatus() + " " + response.getStatusInfo());
             return false;
