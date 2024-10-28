@@ -36,9 +36,10 @@ public class ServiceArticle {
         Entity<Article> data = Entity.entity(article, MediaType.APPLICATION_JSON_TYPE);
 
         Response response = target.request(MediaType.APPLICATION_JSON_TYPE).post(data);
-
+        int status = response.getStatus() ;
+ 
         // Si el estado es 200 (OK), se extrae el body
-        if (response.getStatus() == 200) {
+        if (status == 200 || status ==201) {
             return response.readEntity(Article.class); // Lee el cuerpo como Article
         } else {
             throw new RuntimeException("Failed to add article to conference: " + response.getStatus());

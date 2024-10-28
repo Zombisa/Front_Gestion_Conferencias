@@ -36,6 +36,7 @@ public class ServiceConference {
 
     //GET conference/id
     public ConferenceDTO getConference(String id) {
+        
         ConferenceDTO objConference = null;
 
         WebTarget target = conference.target(this.endPoint + "/" + id);

@@ -30,7 +30,7 @@ import services.ServiceConference;
 public class VConferences extends javax.swing.JFrame{
     private ServiceConference service;
     private ServiceArticle serviceArticle;
-    private List<Conference> conferenceList;
+    private ListConferencesDTO conferenceList;
     private Runnable refreshCallback; 
     private String idAuthor;
 
@@ -44,7 +44,7 @@ public class VConferences extends javax.swing.JFrame{
         this.refreshCallback = refreshCallback;
         initComponents();
         ListConferencesDTO conferences = service.listConferences();
-        
+        this.conferenceList = conferences;
         loadConferences(conferences);
     }
 
@@ -451,10 +451,14 @@ public class VConferences extends javax.swing.JFrame{
 
                 // Obtener el id de la conferencia seleccionada
                 String idConference = selectedConference.getIdConference();
-
+                   
+                for(Conference conference: conferences){
+                    if(conference.getIdConference().equals(idConference)){
+                        VConferenceInfo infoWindow = new VConferenceInfo(service,serviceArticle, conference, idAuthor);
+                        infoWindow.setVisible(true);  // Mostrar la ventana con la información de la conferencia
+                    }
+                }
                 // Abrir la ventana VConferenceInfo con el service y el idConference
-                VConferenceInfo infoWindow = new VConferenceInfo(service,serviceArticle, idConference, idAuthor);
-                infoWindow.setVisible(true);  // Mostrar la ventana con la información de la conferencia
             }
             isPushed = false;
             return label;

@@ -28,13 +28,12 @@ public class VConferenceInfo extends javax.swing.JFrame {
      * Creates new form 
      */
    
-    public VConferenceInfo(ServiceConference service,ServiceArticle serviceArticle,String idConference, String idAuthor) {
+    public VConferenceInfo(ServiceConference service,ServiceArticle serviceArticle,Conference conference, String idAuthor) {
         initComponents();
         this.serviceConferences = service;
         this.serviceArticle=serviceArticle;
         this.idAuthor=idAuthor;
-        this.conference = MapperConference.DTOToConference(service.getConference(idConference));
-        this.idConference = idConference;
+        this.conference = conference;
         mostrarDatos(conference);
         mostrarBoton(conference);
     }
@@ -393,7 +392,7 @@ public class VConferenceInfo extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelMinimizeMouseClicked
 
     private void jButtonIsOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIsOpenActionPerformed
-        VPapers createPaperWindow = new VPapers(serviceConferences,serviceArticle, idConference,idAuthor);
+        VPapers createPaperWindow = new VPapers(serviceConferences,serviceArticle, conference,idAuthor);
         createPaperWindow.setVisible(true); 
         this.setVisible(false);
     }//GEN-LAST:event_jButtonIsOpenActionPerformed

@@ -21,21 +21,22 @@ import utilities.Utilities;
  * @author Isabela Mosquera Fernanandez <isabelamosquera@unicauca.edu.co>
  */
 public class VPapers extends javax.swing.JFrame {
-    private String idConference;
     private String idAuthor;
     private ServiceConference serviceConferences;
     private ServiceArticle serviceArticle;
+    private Conference conference;
     /**
      * Creates new form VLogin
      */
-    public VPapers(ServiceConference service, ServiceArticle serviceArticle, String idConference, String idAuthor) {
-        initComponents();
+    public VPapers(ServiceConference service, ServiceArticle serviceArticle, Conference conferenceIN, String idAuthor) {
         this.serviceConferences=service;
         this.serviceArticle=serviceArticle;
         this.idAuthor=idAuthor;
-        this.idConference=idConference;
         this.serviceArticle = serviceArticle;
-        Conference conference= MapperConference.DTOToConference(service.getConference(idConference));
+        this.conference= conferenceIN;
+
+        initComponents();
+
         jLabelShownName.setText(conference.getName());
     }
 
@@ -71,7 +72,6 @@ public class VPapers extends javax.swing.JFrame {
         jLabelExit = new javax.swing.JLabel();
         jPanelMinimize = new javax.swing.JPanel();
         jLabelMinimize = new javax.swing.JLabel();
-        jLabelLogo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -358,11 +358,6 @@ public class VPapers extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jLabelLogo.setFont(new java.awt.Font("Montserrat", 1, 18)); // NOI18N
-        jLabelLogo.setForeground(new java.awt.Color(193, 255, 116));
-        jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/triangle32.png"))); // NOI18N
-        jLabelLogo.setText("meeting");
-
         javax.swing.GroupLayout jPanelHeaderLayout = new javax.swing.GroupLayout(jPanelHeader);
         jPanelHeader.setLayout(jPanelHeaderLayout);
         jPanelHeaderLayout.setHorizontalGroup(
@@ -370,15 +365,12 @@ public class VPapers extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelHeaderLayout.createSequentialGroup()
                 .addComponent(jPanelMinimize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabelLogo)
-                .addGap(55, 55, 55)
                 .addComponent(jPanelExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanelHeaderLayout.setVerticalGroup(
             jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelHeaderLayout.createSequentialGroup()
                 .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabelLogo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanelExit, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanelMinimize, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -486,10 +478,10 @@ public class VPapers extends javax.swing.JFrame {
                 );
 
                 // Crear un nuevo objeto Article con la fecha formateada
-                Article newArticle = new Article(name, idAuthor, idConference, keyWords, date);
+                Article newArticle = new Article(name, idAuthor, conference.getIdConference(), keyWords, date);
 
                 // Registrar el artículo
-                serviceArticle.addArticleToConference(idConference, newArticle);
+                serviceArticle.addArticleToConference(conference.getIdConference(), newArticle);
 
                 // Mostrar mensaje de éxito
                 JOptionPane.showMessageDialog(this, "Artículo enviado con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
@@ -516,7 +508,6 @@ public class VPapers extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelDate;
     private javax.swing.JLabel jLabelExit;
     private javax.swing.JLabel jLabelKeyWords;
-    private javax.swing.JLabel jLabelLogo;
     private javax.swing.JLabel jLabelMinimize;
     private javax.swing.JLabel jLabelName;
     private javax.swing.JLabel jLabelNameArt1;
