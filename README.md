@@ -20,8 +20,8 @@ https://docs.google.com/document/d/1NiE-S-8X_2oQJUNrd0Zr69dGCrz18xDF/edit?usp=sh
 ## Modelo C4
 Se adjunta el link del drive donde se encuentran los diferentes diagramas C4 del proyecto https://drive.google.com/drive/folders/1-BwrSruKLybSa2fnrJSTmHMLmsA_oN_g?usp=sharing
 ## Decisiones de arquitectura
-Se adjunta el link del documento donde se encuentran las decisiones de arquitectura [Decisiones de arquitectura
-## Jira](https://docs.google.com/document/d/1bIZP4d6B2xzUw1JJl-Cx6wLEnIfuzl16b_nsUMcmtYQ/edit?usp=sharing)
+Se adjunta el link del documento donde se encuentran las decisiones de arquitectura [Decisiones de arquitectura](https://docs.google.com/document/d/1bIZP4d6B2xzUw1JJl-Cx6wLEnIfuzl16b_nsUMcmtYQ/edit?usp=sharing)
+## Jira
 Se adjunta el link del Jira donde se trabajo con scrum,en dos springs https://aplicacion-de-conferencias.atlassian.net/jira/software/projects/TAREA/boards/1/timeline
 ## Thinking Aloud
 Se adjunta el link del documento donde se encuentra el informe del thinking aloud [desarrollado Thinking Aloud](https://docs.google.com/document/d/1zsleJdiIcWNSSD8tzcH8kzNKv1clk7VAiktpS5kQdWQ/edit?usp=sharing)
